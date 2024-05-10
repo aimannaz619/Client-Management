@@ -1,12 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import AllClients from './screens/clients/AllClients';
+import ClientDetails from './screens/clients/ClientDetails';
+import AllSalesPersons from './screens/salesPersons/AllSalesPersons';
+import SalesPersonDetails from './screens/salesPersons/SalesPersonDetails';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+       <AllClients />
+      <ClientDetails />
+      <AllSalesPersons />
+      <SalesPersonDetails/>
+      </View>
+    
+    
   );
 }
 
