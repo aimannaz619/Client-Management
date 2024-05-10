@@ -1,12 +1,6 @@
-import {View, Text} from 'react-native'
+import { View, Text } from "react-native";
+import CSPOutput from "../../components/ClientsSalesPersonOutput/cspOutput";
 function AllClients() {
-    return (
-        <View>
-            <Text>
-                All Clients Screen
-            </Text>
-        </View>
-        
-    )
+  return <CSPOutput />;
 }
 export default AllClients;
