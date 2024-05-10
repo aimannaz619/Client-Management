@@ -14,7 +14,6 @@ export default function App() {
       <SalesPersonDetails/>
       </View>
     
-    
   );
 }
 
