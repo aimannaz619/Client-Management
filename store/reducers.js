@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import { clientReducer } from "./clients/reducer";
+import clientReducer from "./clients/reducer";
 
 const rootReducer = combineReducers({
-  clientReducer: clientReducer,
+  client: clientReducer,
 });
 
 export default rootReducer;
