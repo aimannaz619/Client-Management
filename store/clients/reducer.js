@@ -11,13 +11,18 @@ const clientReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_CLIENTS_REQUEST:
             return { ...state, loading: true };
-        case FETCH_CLIENTS_SUCCESS:
-            return { ...state, loading: false, clients: action.payload, error: null };
-        case FETCH_CLIENTS_FAILURE:
-            return { ...state, loading: false, clients: [], error: action.payload };
+      case FETCH_CLIENTS_SUCCESS:
+        return {
+          ...state,
+         clients: action.payload
+          
+        };
+
+   
         default:
             return state;
-    }
+  }
+
 };
 
 export default clientReducer;
