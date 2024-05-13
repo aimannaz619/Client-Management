@@ -1,9 +1,6 @@
-import { View, Text } from 'react-native';
-function ClientDetails() {
-    return (
-        <View>
-            <Text>Client Details Screen</Text>
-        </View>
-    )
+import { View, Text } from "react-native";
+import CSPDetails from "../../components/ClientsSalesPersonOutput/CSPDetails";
+function ClientDetailsScreen() {
+  return <CSPDetails />;
 }
-export default ClientDetails;
+export default ClientDetailsScreen;

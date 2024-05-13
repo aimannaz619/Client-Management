@@ -1,34 +1,34 @@
 import { StyleSheet, Text, View } from "react-native";
 import AllClients from "./screens/clients/AllClients";
-import ClientDetails from "./screens/clients/ClientDetails";
 import AllSalesPersons from "./screens/salesPersons/AllSalesPersons";
-import SalesPersonDetails from "./screens/salesPersons/SalesPersonDetails";
 import { Provider } from "react-redux";
 import store from "./store";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import IconButton from "./components/UI/IconButton";
 import { GlobalStyles } from "./Constants/styles";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import ClientDetailsScreen from "./screens/clients/ClientDetails";
 
 export default function App() {
   const Drawer = createDrawerNavigator();
-
+  const stack = createNativeStackNavigator();
   function DrawerNavigation() {
     return (
       <Drawer.Navigator
         screenOptions={{
           headerStyle: {
-            backgroundColor: GlobalStyles.colors.brightCyan,
+            backgroundColor: GlobalStyles.colors.darkCyan,
           },
           sceneContainerStyle: {
-            backgroundColor: GlobalStyles.colors.lightGreen,
+            backgroundColor: GlobalStyles.colors.brightCyan,
           },
-          headerTintColor: "white",
+         
           drawerContentStyle: {
             backgroundColor: GlobalStyles.colors.brightCyan,
           },
           drawerActiveBackgroundColor: GlobalStyles.colors.darkCyan,
-          drawerLabelStyle: { color: GlobalStyles.colors.white },
+       
         }}
       >
         <Drawer.Screen
@@ -37,8 +37,15 @@ export default function App() {
           options={{
             title: "Clients",
             headerRight: () => {
-              return <IconButton size={24} color="white" />;
+              return <IconButton name="add" size={24} color="black" />;
             },
+            drawerIcon: ({ size }) => (
+              <IconButton
+                name="person-circle-outline"
+                color="black"
+                size={size}
+              />
+            ),
           }}
         />
         <Drawer.Screen
@@ -46,6 +53,13 @@ export default function App() {
           component={AllSalesPersons}
           options={{
             title: "Sales Person",
+            drawerIcon: ({  size }) => (
+              <IconButton
+                name="person-circle-outline"
+                color="black"
+                size={size}
+              />
+            ),
           }}
         />
       </Drawer.Navigator>
@@ -55,7 +69,28 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <DrawerNavigation />
+        <stack.Navigator
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: GlobalStyles.colors.darkCyan,
+            },
+            contentStyle: {
+              backgroundColor: GlobalStyles.colors.brightCyan,
+            },
+          }}
+        >
+          <stack.Screen
+            name="ClientSalePersons"
+            component={DrawerNavigation}
+            options={{
+              // title: "All Categories",
+              headerShown: false,
+            }}
+          />
+          <stack.Screen name="clientDetails" component={ClientDetailsScreen} />
+        </stack.Navigator>
+
+        {/* <DrawerNavigation /> */}
       </NavigationContainer>
     </Provider>
   );
