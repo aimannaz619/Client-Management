@@ -10,6 +10,7 @@ function AllClients() {
   useEffect(() => {
       dispatch(fetchClientsRequest());
   }, [dispatch]);
+  console.log(client.clients,"client")
 
 
   return <CSPOutput />;
