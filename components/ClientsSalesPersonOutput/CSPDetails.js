@@ -2,8 +2,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { GlobalStyles } from "../../Constants/styles";
 
 function CSPDetails({ name, email, phoneNumber, location, imageUrl }) {
-  console.log(email, "email");
-  console.log(imageUrl, "imageUrl");
+
   return (
     <View style={styles.rootContainer}>
       <View style={styles.innerContainer}>
