@@ -4,11 +4,11 @@ import { GlobalStyles } from "../../Constants/styles";
 import CSPSummary from "./cspSummary";
 import CSPList from "./cspList";
 
-function CSPOutput() {
+function CSPOutput({ navigateTo , data}) {
   return (
     <View style={styles.rootContainer}>
-      <CSPSummary />
-      <CSPList />
+      {/* <CSPSummary /> */}
+      <CSPList navigateTo={navigateTo} data={data} />
     </View>
   );
 }
@@ -18,6 +18,7 @@ export default CSPOutput;
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    backgroundColor: GlobalStyles.colors.lightGreen,
+    marginTop: 15,
+   
   },
 });

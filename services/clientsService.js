@@ -1,10 +1,14 @@
+import axios from "axios";
+
 // clientsService.js
 export const fetchClients = async () => {
-    try {
-        const response = await fetch('../../util/ClientsData.json');
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        throw error;
-    }
+
+  try {
+    const response = require("../util/ClientsData.json");
+   
+    
+    return response;
+  } catch (error) {
+    throw error;
+  }
 };
