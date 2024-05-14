@@ -9,6 +9,7 @@ import IconButton from "./components/UI/IconButton";
 import { GlobalStyles } from "./Constants/styles";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ClientDetailsScreen from "./screens/clients/ClientDetails";
+import SalesPersonDetails from "./screens/salesPersons/SalesPersonDetails";
 
 export default function App() {
   const Drawer = createDrawerNavigator();
@@ -87,7 +88,12 @@ export default function App() {
               headerShown: false,
             }}
           />
-          <stack.Screen name="clientDetails" component={ClientDetailsScreen} />
+          <stack.Screen name="clientDetails" component={ClientDetailsScreen} options={{
+            title: "Client's Info"
+          }} />
+          <stack.Screen name = "salesPersonDetails" component={SalesPersonDetails} options={{
+            title: "Sales Person's Info"
+          }} />
         </stack.Navigator>
 
         {/* <DrawerNavigation /> */}

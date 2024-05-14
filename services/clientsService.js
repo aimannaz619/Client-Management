@@ -1,4 +1,3 @@
-import axios from "axios";
 
 // clientsService.js
 export const fetchClients = async () => {
