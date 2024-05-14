@@ -10,6 +10,7 @@ import { GlobalStyles } from "./Constants/styles";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ClientDetailsScreen from "./screens/clients/ClientDetails";
 import Map from "./screens/Map";
+import SalesPersonDetails from "./screens/salesPersons/SalesPersonDetails";
 
 export default function App() {
   const Drawer = createDrawerNavigator();
@@ -87,7 +88,12 @@ export default function App() {
               headerShown: false,
             }}
           />
-          <stack.Screen name="clientDetails" component={ClientDetailsScreen} />
+          <stack.Screen name="clientDetails" component={ClientDetailsScreen} options={{
+            title: "Client's Info"
+          }} />
+          <stack.Screen name = "salesPersonDetails" component={SalesPersonDetails} options={{
+            title: "Sales Person's Info"
+          }} />
           <stack.Screen
             name="map"
             component={Map}
@@ -95,6 +101,7 @@ export default function App() {
               title: "Map",
             }}
           />
+        
         </stack.Navigator>
 
         {/* <DrawerNavigation /> */}

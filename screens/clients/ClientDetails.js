@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+
 import CSPDetails from "../../components/ClientsSalesPersonOutput/CSPDetails";
 import { useSelector } from "react-redux";
 function ClientDetailsScreen({ route }) {

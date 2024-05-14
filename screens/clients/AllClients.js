@@ -12,6 +12,7 @@ function AllClients() {
   useEffect(() => {
     dispatch(fetchClientsRequest());
   }, [dispatch]);
+ 
 
   return <CSPOutput navigateTo="clientDetails" data={clients} />;
 }
