@@ -1,4 +1,4 @@
-[{"id":1,"name":"Rois","phone_number":"933-711-4102","email":"rream0@privacy.gov.au","address":"Room 1597"},
+[{"id":1,"name":"Rois","phone_number":"933-711-4102","email":"rream0@privacy.gov.au","address":"Room 1597" ,"location" : {"lat": 37.4216863, "lng": -122.0842771}},
 {"id":2,"name":"Ellswerth","phone_number":"306-487-6235","email":"echance1@dagondesign.com","address":"7th Floor"},
 {"id":3,"name":"Betty","phone_number":"445-597-0339","email":"blarimer2@hao123.com","address":"Suite 95"},
 {"id":4,"name":"Rafaela","phone_number":"741-918-4036","email":"rmucklow3@yahoo.com","address":"PO Box 28721"},

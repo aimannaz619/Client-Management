@@ -6,11 +6,11 @@ function SalesPersonDetails({ route }) {
   const salesPerson = useSelector((state) => state.salesPerson.sps);
   const fetchedSalesPerson = salesPerson.find((sp) => sp.id === id);
   return <CSPDetails
-  name={fetchedSalesPerson.name}
-  phoneNumber={fetchedSalesPerson.phone_number}
-  email={fetchedSalesPerson.email}
-  location={fetchedSalesPerson.address}
-  imageUrl={fetchedSalesPerson.image}
+  name={fetchedSalesPerson?.name}
+  phoneNumber={fetchedSalesPerson?.phone_number}
+  email={fetchedSalesPerson?.email}
+  location={fetchedSalesPerson?.location}
+  imageUrl={fetchedSalesPerson?.image}
 />;
 }
 export default SalesPersonDetails;

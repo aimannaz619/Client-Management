@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+
 import CSPDetails from "../../components/ClientsSalesPersonOutput/CSPDetails";
 import { useSelector } from "react-redux";
 function ClientDetailsScreen({ route }) {
@@ -6,13 +6,13 @@ function ClientDetailsScreen({ route }) {
   const id = route.params?.id;
 
   const fetchedClient = clients.find((client) => client.id === id);
- 
+
   return (
     <CSPDetails
       name={fetchedClient.name}
       phoneNumber={fetchedClient.phone_number}
       email={fetchedClient.email}
-      location={fetchedClient.address}
+      location={fetchedClient.location}
       imageUrl={fetchedClient.image}
     />
   );

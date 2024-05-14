@@ -1,14 +1,20 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import { GlobalStyles } from "../../Constants/styles";
+import LocationPicker from "./LocationPicker";
 
 function CSPDetails({ name, email, phoneNumber, location, imageUrl }) {
-
+ 
   return (
     <View style={styles.rootContainer}>
       <View style={styles.innerContainer}>
         <View style={styles.centerContainer}>
           <View style={styles.imageContainer}>
-            <Image source={{ uri: "https://www.agilitypr.com/wp-content/uploads/2020/08/client-1.jpg" }} style={styles.image} />
+            <Image
+              source={{
+                uri: "https://www.agilitypr.com/wp-content/uploads/2020/08/client-1.jpg",
+              }}
+              style={styles.image}
+            />
           </View>
           <Text style={[styles.textItem]}>{name}</Text>
         </View>
@@ -26,7 +32,7 @@ function CSPDetails({ name, email, phoneNumber, location, imageUrl }) {
 
       <View>
         <Text style={[styles.textItem, styles.locationText]}>Location</Text>
-        <Text>{location}</Text>
+        <LocationPicker location={location} />
       </View>
     </View>
   );

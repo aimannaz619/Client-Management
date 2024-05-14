@@ -9,6 +9,7 @@ import IconButton from "./components/UI/IconButton";
 import { GlobalStyles } from "./Constants/styles";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ClientDetailsScreen from "./screens/clients/ClientDetails";
+import Map from "./screens/Map";
 import SalesPersonDetails from "./screens/salesPersons/SalesPersonDetails";
 
 export default function App() {
@@ -24,12 +25,11 @@ export default function App() {
           sceneContainerStyle: {
             backgroundColor: GlobalStyles.colors.brightCyan,
           },
-         
+
           drawerContentStyle: {
             backgroundColor: GlobalStyles.colors.brightCyan,
           },
           drawerActiveBackgroundColor: GlobalStyles.colors.darkCyan,
-       
         }}
       >
         <Drawer.Screen
@@ -54,7 +54,7 @@ export default function App() {
           component={AllSalesPersons}
           options={{
             title: "Sales Person",
-            drawerIcon: ({  size }) => (
+            drawerIcon: ({ size }) => (
               <IconButton
                 name="person-circle-outline"
                 color="black"
@@ -94,6 +94,14 @@ export default function App() {
           <stack.Screen name = "salesPersonDetails" component={SalesPersonDetails} options={{
             title: "Sales Person's Info"
           }} />
+          <stack.Screen
+            name="map"
+            component={Map}
+            options={{
+              title: "Map",
+            }}
+          />
+        
         </stack.Navigator>
 
         {/* <DrawerNavigation /> */}

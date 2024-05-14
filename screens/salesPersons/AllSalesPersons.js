@@ -9,7 +9,7 @@ function AllSalesPersons() {
 
     const dispatch = useDispatch();
     const salesPerson = useSelector((state) => state.salesPerson.sps)
-    console.log(salesPerson,"sales persons")
+    
     useEffect(() => {
         dispatch(fetchSpsRequest());
     }, [dispatch]);
