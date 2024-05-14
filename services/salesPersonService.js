@@ -1,9 +1,9 @@
 // salesPersonsService.js
 export const fetchSalesPersons = async () => {
     try {
-        const response = await fetch('../../util/SalesPersonData.json');
-        const data = await response.json();
-        return data;
+        const response = require('../util/SalesPersonData.json');
+        console.log("response")
+        return response;
     } catch (error) {
         throw error;
     }
