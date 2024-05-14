@@ -18,7 +18,7 @@ function LocationPicker({ location }) {
   let locationPreview = <Text>No location picked yet.</Text>;
 
   if (pickedLocation) {
-    console.log("true");
+    
     locationPreview = (
       <Image
         style={styles.image}

@@ -3,7 +3,7 @@ import { GlobalStyles } from "../../Constants/styles";
 import LocationPicker from "./LocationPicker";
 
 function CSPDetails({ name, email, phoneNumber, location, imageUrl }) {
-  console.log(location, "location");
+ 
   return (
     <View style={styles.rootContainer}>
       <View style={styles.innerContainer}>
