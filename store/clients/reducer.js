@@ -1,5 +1,5 @@
 // clientReducer.js
-import { FETCH_CLIENTS_REQUEST, FETCH_CLIENTS_SUCCESS, FETCH_CLIENTS_FAILURE } from './actions';
+import { FETCH_CLIENTS_REQUEST, FETCH_CLIENTS_SUCCESS, FETCH_CLIENTS_FAILURE } from './actionTypes';
 
 const initialState = {
     clients: [],
@@ -8,6 +8,7 @@ const initialState = {
 };
 
 const clientReducer = (state = initialState, action) => {
+
     switch (action.type) {
         case FETCH_CLIENTS_REQUEST:
             return { ...state, loading: true };

@@ -13,11 +13,11 @@ import {
 } from "./actionTypes";
 
 function* fetchSpsSaga() {
-  console.log("? saga");
+
   try {
     const salesPersons = yield call(fetchSalesPersons);
 
-    console.log(salesPersons, "salesPersons");
+
     yield put({ type: FETCH_SP_SUCCESS, payload: salesPersons });
   } catch (error) {
     yield put(fetchSpsFailure(error));
@@ -30,6 +30,13 @@ function* fetchSPByIdSaga(payload) {
 
     yield put({ type: FETCH_SP_BY_ID_SUCCESS, payload: salesPerson });
   } catch (error) {}
+    try {
+        const salesPersons = yield call(fetchSalesPersons);
+
+        yield put ({type:FETCH_SP_SUCCESS , payload :salesPersons})
+    } catch (error) {
+        yield put(fetchSpsFailure(error));
+    }
 }
 
 function* watchSpsSaga() {
