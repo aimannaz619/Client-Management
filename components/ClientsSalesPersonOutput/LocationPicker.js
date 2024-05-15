@@ -11,14 +11,14 @@ function LocationPicker({ location }) {
 
   useEffect(() => {
     setPickedLocation({
-      lat: location.lat,
-      lng: location.lng,
+      lat: location?.latitude,
+      lng: location?.longitude,
     });
-  }, []);
+  }, [location]);
   let locationPreview = <Text>No location picked yet.</Text>;
 
+
   if (pickedLocation) {
-    
     locationPreview = (
       <Image
         style={styles.image}

@@ -7,22 +7,22 @@ function SalesPersonDetails({ route }) {
   const dispatch = useDispatch();
   const id = route.params?.id;
   const salesPerson = useSelector((state) => state.salesPerson.sps);
-  const fetchedSalesPerson = salesPerson.find((sp) => sp.id === id);
+  const salePerson = useSelector((state) => state.salesPerson.salePerson);
 
-  // useEffect(() => {
-  //   if (id) {
-  //     console.log("dispatch");
-  //     dispatch(fetchSalesPersonById(id));
-  //   }
-  // }, [id]);
+  useEffect(() => {
+    if (id) {
+   
+      dispatch(fetchSalesPersonById(id));
+    }
+  }, [id]);
 
   return (
     <CSPDetails
-      name={fetchedSalesPerson?.name}
-      phoneNumber={fetchedSalesPerson?.phone_number}
-      email={fetchedSalesPerson?.email}
-      location={fetchedSalesPerson?.location}
-      imageUrl={fetchedSalesPerson?.image}
+      name={salePerson?.name}
+      phoneNumber={salePerson?.phone_number}
+      email={salePerson?.email}
+      location={salePerson?.location}
+      imageUrl={salePerson?.image}
     />
   );
 }
