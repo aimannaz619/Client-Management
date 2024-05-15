@@ -1,10 +1,10 @@
 const chalk = require('chalk');
 const { readFile, writeFile, copyFile } = require('fs').promises;
 
-console.log(chalk.green('here'));
+
 
 function log(...args) {
-  console.log(chalk.yellow('[react-native-maps]'), ...args);
+  
 }
 
 reactNativeMaps = async function() {

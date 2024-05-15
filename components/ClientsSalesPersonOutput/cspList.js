@@ -16,7 +16,7 @@ function CSPList({ navigateTo, data }) {
     return <CSPItem {...itemsProps} />;
   }
 
-  console.log(data, "data")
+ 
 
   return (
     <FlatList
