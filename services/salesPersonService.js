@@ -1,3 +1,6 @@
+import axios from "axios";
+import { API_URL_GET_SALE_PERSON_BY_ID } from "../config/endPoints/salesPerson";
+
 // salesPersonsService.js
 export const fetchSalesPersons = async () => {
   try {
@@ -7,4 +10,10 @@ export const fetchSalesPersons = async () => {
   } catch (error) {
     throw error;
   }
+};
+
+export const fetchSalesPersonByIdService = async () => {
+  try {
+    const response = await axios.get(API_URL_GET_SALE_PERSON_BY_ID);
+  } catch (error) {}
 };

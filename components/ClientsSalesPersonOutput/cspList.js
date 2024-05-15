@@ -16,8 +16,6 @@ function CSPList({ navigateTo, data }) {
     return <CSPItem {...itemsProps} />;
   }
 
- 
-
   return (
     <FlatList
       data={data}

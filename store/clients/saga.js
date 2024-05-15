@@ -2,7 +2,6 @@
 import { takeLatest, call, put, all, fork } from "redux-saga/effects";
 import {
   FETCH_CLIENTS_REQUEST,
-  fetchClientsSuccess,
   fetchClientsFailure,
   FETCH_CLIENTS_SUCCESS,
 } from "./actions";
