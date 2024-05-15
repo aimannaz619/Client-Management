@@ -2,16 +2,15 @@
 import { takeLatest, call, put, all, fork } from "redux-saga/effects";
 import {
   FETCH_CLIENTS_REQUEST,
-  fetchClientsSuccess,
   fetchClientsFailure,
   FETCH_CLIENTS_SUCCESS,
-} from "./actions";
+} from "./actionTypes";
 import { fetchClients } from "../../services/clientsService";
 
 function* fetchClientsSaga() {
   try {
     const clients = yield call(fetchClients);
-   
+
     // yield put(fetchClientsSuccess(clients));
     yield put({ type: FETCH_CLIENTS_SUCCESS, payload: clients });
   } catch (error) {

@@ -1,5 +1,7 @@
 // clientReducer.js
-import { FETCH_SP_REQUEST, FETCH_SP_SUCCESS, FETCH_SP_FAILURE } from './actions';
+
+import { FETCH_SP_REQUEST, FETCH_SP_SUCCESS } from "./actionTypes";
+
 
 const initialState = {
     sps: [],
