@@ -3,7 +3,7 @@ import CSPItem from "./cspItem";
 
 function CSPList({ navigateTo, data }) {
   function renderItems(itemsData) {
-    // return <Text>{itemsData.item.description}</Text>;
+    
     const item = itemsData.item;
     const itemsProps = {
       id: item._id,
