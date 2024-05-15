@@ -6,7 +6,7 @@ function CSPList({ navigateTo, data }) {
     // return <Text>{itemsData.item.description}</Text>;
     const item = itemsData.item;
     const itemsProps = {
-      id: item.id,
+      id: item._id,
       name: item.name,
       phoneNumber: item.phone_number,
       email: item.email,
@@ -16,11 +16,13 @@ function CSPList({ navigateTo, data }) {
     return <CSPItem {...itemsProps} />;
   }
 
+ 
+
   return (
     <FlatList
       data={data}
       renderItem={renderItems}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item._id}
     ></FlatList>
   );
 }
