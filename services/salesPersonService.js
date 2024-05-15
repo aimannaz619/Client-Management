@@ -14,8 +14,12 @@ export const fetchSalesPersons = async () => {
   } catch (error) {}
 };
 
-export const fetchSalesPersonByIdService = async () => {
+export const fetchSalesPersonByIdService = async (id) => {
+
   try {
-    const response = await axios.get(API_URL_GET_SALE_PERSON_BY_ID);
-  } catch (error) {}
+    const response = await axios.get(`${API_URL_GET_SALE_PERSON_BY_ID}/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 };
