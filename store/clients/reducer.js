@@ -8,6 +8,7 @@ const initialState = {
 };
 
 const clientReducer = (state = initialState, action) => {
+
     switch (action.type) {
         case FETCH_CLIENTS_REQUEST:
             return { ...state, loading: true };
