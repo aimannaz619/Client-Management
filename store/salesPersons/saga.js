@@ -6,6 +6,7 @@ import { fetchSalesPersons } from '../../services/salesPersonService';
 function* fetchSpsSaga() {
     try {
         const salesPersons = yield call(fetchSalesPersons);
+
         yield put ({type:FETCH_SP_SUCCESS , payload :salesPersons})
     } catch (error) {
         yield put(fetchSpsFailure(error));
