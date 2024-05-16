@@ -12,6 +12,8 @@ import ClientDetailsScreen from "./screens/clients/ClientDetails";
 import Map from "./screens/Map";
 import SalesPersonDetails from "./screens/salesPersons/SalesPersonDetails";
 
+import ScheduleMeetingsScreen from "./screens/salesPersons/ScheduleMeetings";
+
 export default function App() {
   const Drawer = createDrawerNavigator();
   const stack = createNativeStackNavigator();
@@ -88,12 +90,20 @@ export default function App() {
               headerShown: false,
             }}
           />
-          <stack.Screen name="clientDetails" component={ClientDetailsScreen} options={{
-            title: "Client's Info"
-          }} />
-          <stack.Screen name = "salesPersonDetails" component={SalesPersonDetails} options={{
-            title: "Sales Person's Info"
-          }} />
+          <stack.Screen
+            name="clientDetails"
+            component={ClientDetailsScreen}
+            options={{
+              title: "Client's Info",
+            }}
+          />
+          <stack.Screen
+            name="salesPersonDetails"
+            component={SalesPersonDetails}
+            options={{
+              title: "Sales Person's Info",
+            }}
+          />
           <stack.Screen
             name="map"
             component={Map}
@@ -101,7 +111,13 @@ export default function App() {
               title: "Map",
             }}
           />
-        
+          <stack.Screen
+            name="scheduleMeeting"
+            component={ScheduleMeetingsScreen}
+            options={{
+              title: "Schedule Meetings",
+            }}
+          />
         </stack.Navigator>
 
         {/* <DrawerNavigation /> */}

@@ -7,7 +7,6 @@ import CSPList from "./cspList";
 function CSPOutput({ navigateTo , data}) {
   return (
     <View style={styles.rootContainer}>
-      {/* <CSPSummary /> */}
       <CSPList navigateTo={navigateTo} data={data} />
     </View>
   );
