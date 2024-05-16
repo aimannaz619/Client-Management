@@ -2,8 +2,12 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { GlobalStyles } from "../../Constants/styles";
 import LocationPicker from "./LocationPicker";
 
-function CSPDetails({ name, email, phoneNumber, location, imageUrl }) {
- 
+function CSPDetails({ name, email, phoneNumber, location, imageUrl, associatedClients }) {
+
+  const clients = associatedClients?.map(client => client.name);
+  const clientNames = clients?.join(', ');
+
+
   return (
     <View style={styles.rootContainer}>
       <View style={styles.innerContainer}>
@@ -26,6 +30,10 @@ function CSPDetails({ name, email, phoneNumber, location, imageUrl }) {
           <View style={styles.textContainer}>
             <Text style={styles.textItem}>Phone Number:</Text>
             <Text>{phoneNumber}</Text>
+          </View>
+          <View style={styles.textContainer}>
+            <Text style={styles.textItem}>Associated Clients:</Text>
+            <Text>{clientNames}</Text>
           </View>
         </View>
       </View>
@@ -76,6 +84,8 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flexDirection: "row",
+    flexWrap: "wrap",
+
   },
 
   locationText: {
@@ -85,5 +95,6 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: "100%",
-  },
+  }
+
 });

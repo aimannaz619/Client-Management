@@ -6,7 +6,6 @@ import { fetchSalesPersonById } from "../../store/salesPersons/actions";
 function SalesPersonDetails({ route }) {
   const dispatch = useDispatch();
   const id = route.params?.id;
-  const salesPerson = useSelector((state) => state.salesPerson.sps);
   const salePerson = useSelector((state) => state.salesPerson.salePerson);
 
   useEffect(() => {
@@ -18,11 +17,12 @@ function SalesPersonDetails({ route }) {
 
   return (
     <CSPDetails
-      name={salePerson?.name}
-      phoneNumber={salePerson?.phone_number}
-      email={salePerson?.email}
-      location={salePerson?.location}
-      imageUrl={salePerson?.image}
+      name={salePerson?.salesPerson?.name}
+      phoneNumber={salePerson?.salesPerson?.phone_number}
+      email={salePerson?.salesPerson?.email}
+      location={salePerson?.salesPerson?.location}
+      imageUrl={salePerson?.salesPerson?.image}
+      associatedClients={salePerson?.associatedClients}
     />
   );
 }
