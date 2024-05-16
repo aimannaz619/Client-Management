@@ -1,13 +1,22 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import { GlobalStyles } from "../../Constants/styles";
 import LocationPicker from "./LocationPicker";
+import PrimaryButton from "../UI/PrimaryButton";
 
-function CSPDetails({ name, email, phoneNumber, location, imageUrl, associatedClients }) {
+function CSPDetails({  name,
+  email,
+  phoneNumber,
+  location,
+  imageUrl,
+  pressHandler,
+  showButton,
+  buttonText, imageUrl, associatedClients }) {
 
   const clients = associatedClients?.map(client => client.name);
   const clientNames = clients?.join(', ');
 
 
+ 
   return (
     <View style={styles.rootContainer}>
       <View style={styles.innerContainer}>
@@ -35,6 +44,13 @@ function CSPDetails({ name, email, phoneNumber, location, imageUrl, associatedCl
             <Text style={styles.textItem}>Associated Clients:</Text>
             <Text>{clientNames}</Text>
           </View>
+          {showButton && (
+            <View style={styles.buttonStyle}>
+              <PrimaryButton pressHandler={pressHandler}>
+                {buttonText}
+              </PrimaryButton>
+            </View>
+          )}
         </View>
       </View>
 
@@ -95,6 +111,10 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: "100%",
-  }
-
+  },
+  buttonStyle: {
+    marginTop: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });

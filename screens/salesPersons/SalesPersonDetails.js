@@ -3,17 +3,20 @@ import { useDispatch, useSelector } from "react-redux";
 import CSPDetails from "../../components/ClientsSalesPersonOutput/CSPDetails";
 import { useEffect } from "react";
 import { fetchSalesPersonById } from "../../store/salesPersons/actions";
-function SalesPersonDetails({ route }) {
+function SalesPersonDetails({ route, navigation }) {
   const dispatch = useDispatch();
   const id = route.params?.id;
   const salePerson = useSelector((state) => state.salesPerson.salePerson);
 
   useEffect(() => {
     if (id) {
-   
       dispatch(fetchSalesPersonById(id));
     }
   }, [id]);
+
+  function navigateToScheduleMeeting() {
+    navigation.navigate("scheduleMeeting");
+  }
 
   return (
     <CSPDetails
@@ -23,6 +26,9 @@ function SalesPersonDetails({ route }) {
       location={salePerson?.salesPerson?.location}
       imageUrl={salePerson?.salesPerson?.image}
       associatedClients={salePerson?.associatedClients}
+      pressHandler={navigateToScheduleMeeting}
+      showButton={true}
+      buttonText="Schedule Meeting"
     />
   );
 }

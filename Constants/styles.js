@@ -6,8 +6,9 @@ export const GlobalStyles = {
     primary200: "#77cff8",
     darkCyan: "#33cfeb",
     white: "white",
-    darkBlue: "#2f4fd1",
+    darkBlue: "#4fd4e2",
     darkGreen: "#0e5e05",
+   bottleGreen: "#087c69",
     
     
     
