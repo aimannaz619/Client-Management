@@ -1,19 +1,28 @@
 
+import { useEffect } from "react";
 import CSPDetails from "../../components/ClientsSalesPersonOutput/CSPDetails";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getClientsByIdsRequest } from "../../store/clients/actions";
 function ClientDetailsScreen({ route }) {
-  const clients = useSelector((state) => state.client.clients);
+
+  const dispatch = useDispatch()
+  // const clients = useSelector((state) => state.client.clients);
+  const clientsById =  useSelector((state)=> state.client.clientById)
   const id = route.params?.id;
 
-  const fetchedClient = clients.find((client) => client.id === id);
+  useEffect(() => {
+    if (id) {
+      dispatch(getClientsByIdsRequest(id))
+    }
 
+},[id])
   return (
     <CSPDetails
-      name={fetchedClient.name}
-      phoneNumber={fetchedClient.phone_number}
-      email={fetchedClient.email}
-      location={fetchedClient.location}
-      imageUrl={fetchedClient.image}
+      name={clientsById?.name}
+      phoneNumber={clientsById?.phone_number}
+      email={clientsById?.email}
+      location={clientsById?.location}
+      imageUrl={clientsById?.image}
     />
   );
 }
