@@ -4,6 +4,7 @@ import {
   FETCH_SP_BY_ID_SUCCESS,
   FETCH_SP_REQUEST,
   FETCH_SP_SUCCESS,
+ 
 } from "./actionTypes";
 
 const initialState = {
@@ -28,6 +29,7 @@ const salesPersonReducer = (state = initialState, action) => {
         ...state,
         salePerson: action.payload,
       };
+  
     default:
       return state;
   }

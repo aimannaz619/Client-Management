@@ -7,7 +7,7 @@ function ClientDetailsScreen({ route }) {
 
   const dispatch = useDispatch()
   // const clients = useSelector((state) => state.client.clients);
-  const clientsById =  useSelector((state)=> state.client.clientById)
+  const clientsById =  useSelector((state)=> state.clientReducer.clientById)
   const id = route.params?.id;
 
   useEffect(() => {
