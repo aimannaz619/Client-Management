@@ -3,9 +3,11 @@
 import {
   FETCH_CLIENTS_FAILURE,
   FETCH_CLIENTS_SUCCESS,
-    FETCH_CLIENTS_REQUEST,
-    GET_CLIENTS_BY_ID,
-    GET_CLIENTS_BY_ID_SUCCESS,
+  FETCH_CLIENTS_REQUEST,
+  GET_CLIENTS_BY_ID,
+  GET_CLIENTS_BY_ID_SUCCESS,
+  GET_ASSOCIATED_CLIENTS,
+  GET_CLIENTS_BY_ID_FAILURE,
 } from "./actionTypes";
 
 export const fetchClientsRequest = () => ({
@@ -22,18 +24,18 @@ export const fetchClientsFailure = (error) => ({
   payload: error,
 });
 
-export const getClientsByIdsRequest = (id) => (
-  {
-    type: GET_CLIENTS_BY_ID,
-    payload: id,
-  });
+export const getClientsByIdsRequest = (id) => ({
+  type: GET_CLIENTS_BY_ID,
+  payload: id,
+});
 
 export const getClientsByIdsSuccess = (clients) => ({
-    type: GET_CLIENTS_BY_ID_SUCCESS,
-    clients
+  type: GET_CLIENTS_BY_ID_SUCCESS,
+  clients,
 });
 
 export const getClientsByIdsFailure = (error) => ({
-    type: GET_CLIENTS_BY_ID_FAILURE,
-    error
+  type: GET_CLIENTS_BY_ID_FAILURE,
+  error,
 });
+
