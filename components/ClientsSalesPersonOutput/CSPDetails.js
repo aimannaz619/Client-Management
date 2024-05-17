@@ -2,21 +2,24 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { GlobalStyles } from "../../Constants/styles";
 import LocationPicker from "./LocationPicker";
 import PrimaryButton from "../UI/PrimaryButton";
+import CSPSummary from "./cspSummary";
+import MeetingsList from "../Meetings/MeetingsList";
 
-function CSPDetails({  name,
+function CSPDetails({
+  name,
   email,
   phoneNumber,
   location,
-  imageUrl,
   pressHandler,
   showButton,
-  buttonText, imageUrl, associatedClients }) {
+  buttonText,
+  imageUrl,
+  associatedClients,
+  meetingsList
+}) {
 
   const clients = associatedClients?.map(client => client.name);
   const clientNames = clients?.join(', ');
-
-
- 
   return (
     <View style={styles.rootContainer}>
       <View style={styles.innerContainer}>
@@ -53,11 +56,14 @@ function CSPDetails({  name,
           )}
         </View>
       </View>
-
       <View>
         <Text style={[styles.textItem, styles.locationText]}>Location</Text>
         <LocationPicker location={location} />
       </View>
+      <View>
+        <MeetingsList data={meetingsList} />
+      </View>
+     
     </View>
   );
 }

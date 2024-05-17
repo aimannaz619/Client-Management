@@ -8,7 +8,7 @@ export const GlobalStyles = {
     white: "white",
     darkBlue: "#4fd4e2",
     darkGreen: "#0e5e05",
-   bottleGreen: "#087c69",
+    bottleGreen: "#087c69",
     
     
     

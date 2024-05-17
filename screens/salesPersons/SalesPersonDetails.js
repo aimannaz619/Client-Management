@@ -29,6 +29,7 @@ function SalesPersonDetails({ route, navigation }) {
       pressHandler={navigateToScheduleMeeting}
       showButton={true}
       buttonText="Schedule Meeting"
+      meetingsList={"ABC"}
     />
   );
 }
