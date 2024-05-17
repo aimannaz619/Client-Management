@@ -6,7 +6,7 @@ import CSPOutput from "../../components/ClientsSalesPersonOutput/cspOutput";
 function AllClients() {
   const dispatch = useDispatch();
 
-  const clients = useSelector((state) => state.client.clients);
+  const clients = useSelector((state) => state.clientReducer.clients);
 
 
   useEffect(() => {

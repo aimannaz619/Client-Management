@@ -3,12 +3,21 @@ import { takeLatest, call, put, all, fork } from "redux-saga/effects";
 import {
   FETCH_CLIENTS_REQUEST,
   fetchClientsFailure,
-    FETCH_CLIENTS_SUCCESS,
-    GET_CLIENTS_BY_ID,
-    GET_CLIENTS_BY_ID_SUCCESS
+  FETCH_CLIENTS_SUCCESS,
+  GET_CLIENTS_BY_ID,
+  GET_CLIENTS_BY_ID_SUCCESS,
+  GET_ASSOCIATED_CLIENTS_SUCCESS,
+  GET_ASSOCIATED_CLIENTS,
 } from "./actionTypes";
-import { fetchClients } from "../../services/clientsService";
-import { getClientsByIdsSuccess, getClientsByIdsFailure, getClientsByIdsRequest } from "./actions";
+import {
+  fetchAssociatedClientsService,
+  fetchClients,
+} from "../../services/clientsService";
+import {
+  getClientsByIdsSuccess,
+  getClientsByIdsFailure,
+  getClientsByIdsRequest,
+} from "./actions";
 import { getClientsByIds } from "../../services/clientsService";
 
 function* fetchClientsSaga() {
@@ -20,20 +29,12 @@ function* fetchClientsSaga() {
   }
 }
 
-
 function* fetchClientsByIdSaga(action) {
- 
-    try {
-      const clientsById = yield call(
-        getClientsByIds,
-        action.payload
-      );
-      yield put({ type: GET_CLIENTS_BY_ID_SUCCESS, payload: clientsById });
-    } catch (error) {
-      
-    }
-    
-  }
+  try {
+    const clientsById = yield call(getClientsByIds, action.payload);
+    yield put({ type: GET_CLIENTS_BY_ID_SUCCESS, payload: clientsById });
+  } catch (error) {}
+}
 
 
 
@@ -41,14 +42,17 @@ function* watchClientSaga() {
   yield takeLatest(FETCH_CLIENTS_REQUEST, fetchClientsSaga);
 }
 
-
 function* watchGetClientsByIds() {
-    yield takeLatest(GET_CLIENTS_BY_ID, fetchClientsByIdSaga);
+  yield takeLatest(GET_CLIENTS_BY_ID, fetchClientsByIdSaga);
 }
 
+
+
 export function* clientSaga() {
-  yield all([fork(watchClientSaga),
-    fork(watchGetClientsByIds)
+  yield all([
+    fork(watchClientSaga),
+    fork(watchGetClientsByIds),
+   
   ]);
 }
 

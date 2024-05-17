@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
+import { ToastProvider } from "react-native-toast-notifications";
 import AllClients from "./screens/clients/AllClients";
 import AllSalesPersons from "./screens/salesPersons/AllSalesPersons";
 import { Provider } from "react-redux";
@@ -71,57 +72,63 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <stack.Navigator
-          screenOptions={{
-            headerStyle: {
-              backgroundColor: GlobalStyles.colors.darkCyan,
-            },
-            contentStyle: {
-              backgroundColor: GlobalStyles.colors.brightCyan,
-            },
-          }}
-        >
-          <stack.Screen
-            name="ClientSalePersons"
-            component={DrawerNavigation}
-            options={{
-              // title: "All Categories",
-              headerShown: false,
+      <ToastProvider
+        textStyle={{ fontSize: 18 }}
+        offset={50} // offset for both top and bottom toasts
+        offsetTop={30}
+        offsetBottom={40}
+        swipeEnabled={true}
+      >
+        <NavigationContainer>
+          <stack.Navigator
+            screenOptions={{
+              headerStyle: {
+                backgroundColor: GlobalStyles.colors.darkCyan,
+              },
+              contentStyle: {
+                backgroundColor: GlobalStyles.colors.brightCyan,
+              },
             }}
-          />
-          <stack.Screen
-            name="clientDetails"
-            component={ClientDetailsScreen}
-            options={{
-              title: "Client's Info",
-            }}
-          />
-          <stack.Screen
-            name="salesPersonDetails"
-            component={SalesPersonDetails}
-            options={{
-              title: "Sales Person's Info",
-            }}
-          />
-          <stack.Screen
-            name="map"
-            component={Map}
-            options={{
-              title: "Map",
-            }}
-          />
-          <stack.Screen
-            name="scheduleMeeting"
-            component={ScheduleMeetingsScreen}
-            options={{
-              title: "Schedule Meetings",
-            }}
-          />
-        </stack.Navigator>
-
-        {/* <DrawerNavigation /> */}
-      </NavigationContainer>
+          >
+            <stack.Screen
+              name="ClientSalePersons"
+              component={DrawerNavigation}
+              options={{
+                // title: "All Categories",
+                headerShown: false,
+              }}
+            />
+            <stack.Screen
+              name="clientDetails"
+              component={ClientDetailsScreen}
+              options={{
+                title: "Client's Info",
+              }}
+            />
+            <stack.Screen
+              name="salesPersonDetails"
+              component={SalesPersonDetails}
+              options={{
+                title: "Sales Person's Info",
+              }}
+            />
+            <stack.Screen
+              name="map"
+              component={Map}
+              options={{
+                title: "Map",
+              }}
+            />
+            <stack.Screen
+              name="scheduleMeeting"
+              component={ScheduleMeetingsScreen}
+              options={{
+                title: "Schedule Meetings",
+              }}
+            />
+          </stack.Navigator>
+        </NavigationContainer>
+      </ToastProvider>
     </Provider>
   );
 }

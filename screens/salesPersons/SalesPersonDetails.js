@@ -6,8 +6,8 @@ import { fetchSalesPersonById } from "../../store/salesPersons/actions";
 function SalesPersonDetails({ route, navigation }) {
   const dispatch = useDispatch();
   const id = route.params?.id;
-  const salesPerson = useSelector((state) => state.salesPerson.sps);
-  const salePerson = useSelector((state) => state.salesPerson.salePerson);
+  const salesPerson = useSelector((state) => state.salesPersonReducer.sps);
+  const salePerson = useSelector((state) => state.salesPersonReducer.salePerson);
 
   useEffect(() => {
     if (id) {

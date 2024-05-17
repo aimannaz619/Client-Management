@@ -8,7 +8,7 @@ import { Text } from 'react-native';
 function AllSalesPersons() {
 
     const dispatch = useDispatch();
-    const salesPerson = useSelector((state) => state.salesPerson.sps)
+    const salesPerson = useSelector((state) => state.salesPersonReducer.sps)
     
     useEffect(() => {
         dispatch(fetchSpsRequest());
