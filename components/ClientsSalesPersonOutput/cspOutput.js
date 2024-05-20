@@ -1,13 +1,13 @@
 import { StyleSheet, View } from "react-native";
 
-import { GlobalStyles } from "../../Constants/styles";
-import CSPSummary from "./cspSummary";
+
 import CSPList from "./cspList";
 
-function CSPOutput({ navigateTo , data}) {
+function CSPOutput({ navigateTo, data, headers }) {
   return (
     <View style={styles.rootContainer}>
-      <CSPList navigateTo={navigateTo} data={data} />
+      
+      <CSPList navigateTo={navigateTo} data={data} headers={headers} />
     </View>
   );
 }
@@ -18,6 +18,5 @@ const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
     marginTop: 15,
-   
   },
 });

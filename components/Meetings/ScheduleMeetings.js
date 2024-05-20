@@ -47,7 +47,6 @@ function ScheduleMeetings() {
     time: null,
   });
 
-
   const [items, setItems] = useState([]);
 
   //Validation
@@ -90,7 +89,6 @@ function ScheduleMeetings() {
   };
 
   const handleDateConfirm = (date) => {
-   
     setSelectedDateTime({
       ...selectedDateTime,
       date: date,
@@ -103,7 +101,7 @@ function ScheduleMeetings() {
       ...selectedDateTime,
       time: time,
     });
-   
+
     hideTimePicker();
   };
 
@@ -132,8 +130,6 @@ function ScheduleMeetings() {
       },
     };
 
-  
-
     dispatch(saveMeetingAction(payload));
   }
 
@@ -154,6 +150,7 @@ function ScheduleMeetings() {
             setOpen={setOpen}
             setValue={setSelectedItem}
             setItems={setItems}
+            placeholder="Select a client"
             placeholderStyle={{
               fontSize: 15,
             }}
