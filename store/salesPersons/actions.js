@@ -6,6 +6,7 @@ import {
   FETCH_SP_FAILURE,
   FETCH_SP_BY_ID_REQUEST,
   SAVE_MEETING,
+  FETCH_MEETINGS_BY_ID_REQUEST
 } from "./actionTypes";
 
 export const fetchSpsRequest = () => ({
@@ -31,3 +32,8 @@ export const saveMeetingAction = (payload) => ({
   type: SAVE_MEETING,
   payload,
 });
+
+export const getMeetingsByIdsRequest = (id) => ({
+  type: FETCH_MEETINGS_BY_ID_REQUEST,
+  payload: id,
+})

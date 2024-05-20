@@ -6,7 +6,6 @@ import { fetchSalesPersonById } from "../../store/salesPersons/actions";
 function SalesPersonDetails({ route, navigation }) {
   const dispatch = useDispatch();
   const id = route.params?.id;
-  const salesPerson = useSelector((state) => state.salesPersonReducer.sps);
   const salePerson = useSelector((state) => state.salesPersonReducer.salePerson);
 
   useEffect(() => {
@@ -16,19 +15,23 @@ function SalesPersonDetails({ route, navigation }) {
   }, [id]);
 
   function navigateToScheduleMeeting() {
-    navigation.navigate("scheduleMeeting");
+    navigation.navigate("scheduleMeeting", {
+      id
+    });
   }
 
   return (
     <CSPDetails
-      name={salePerson?.name}
-      phoneNumber={salePerson?.phone_number}
-      email={salePerson?.email}
-      location={salePerson?.location}
-      imageUrl={salePerson?.image}
+      name={salePerson?.salesPerson?.name}
+      phoneNumber={salePerson?.salesPerson?.phone_number}
+      email={salePerson?.salesPerson?.email}
+      location={salePerson?.salesPerson?.location}
+      imageUrl={salePerson?.salesPerson?.image}
+      associatedClients={salePerson?.associatedClients}
       pressHandler={navigateToScheduleMeeting}
       showButton={true}
       buttonText="Schedule Meeting"
+      meetingsList={"ABC"}
     />
   );
 }

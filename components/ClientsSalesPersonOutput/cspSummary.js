@@ -24,9 +24,7 @@ function CSPSummary({ headers }) {
       </View>
     </Pressable>
   );
-}
-
-export default CSPSummary;
+};
 
 const styles = StyleSheet.create({
   rootHeader: {
@@ -52,3 +50,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
+
+export default CSPSummary;

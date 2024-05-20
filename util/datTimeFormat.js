@@ -15,3 +15,8 @@ export function formattedTime(time) {
 export function timeFormate2(time) {
   return time.toISOString().split("T")[1];
 }
+export function formatTime(timeString) {
+  const date = new Date(timeString);
+  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+

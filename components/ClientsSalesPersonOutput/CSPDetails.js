@@ -2,17 +2,24 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { GlobalStyles } from "../../Constants/styles";
 import LocationPicker from "./LocationPicker";
 import PrimaryButton from "../UI/PrimaryButton";
+import CSPSummary from "./cspSummary";
+import MeetingsList from "../Meetings/MeetingsList";
 
 function CSPDetails({
   name,
   email,
   phoneNumber,
   location,
-  imageUrl,
   pressHandler,
   showButton,
-  buttonText
+  buttonText,
+  imageUrl,
+  associatedClients,
+  meetingsList
 }) {
+
+  const clients = associatedClients?.map(client => client.name);
+  const clientNames = clients?.join(', ');
   return (
     <View style={styles.rootContainer}>
       <View style={styles.innerContainer}>
@@ -36,6 +43,10 @@ function CSPDetails({
             <Text style={styles.textItem}>Phone Number:</Text>
             <Text>{phoneNumber}</Text>
           </View>
+          <View style={styles.textContainer}>
+            <Text style={styles.textItem}>Associated Clients:</Text>
+            <Text>{clientNames}</Text>
+          </View>
           {showButton && (
             <View style={styles.buttonStyle}>
               <PrimaryButton pressHandler={pressHandler}>
@@ -45,11 +56,14 @@ function CSPDetails({
           )}
         </View>
       </View>
-
       <View>
         <Text style={[styles.textItem, styles.locationText]}>Location</Text>
         <LocationPicker location={location} />
       </View>
+      <View>
+        <MeetingsList data={meetingsList} />
+      </View>
+     
     </View>
   );
 }
@@ -92,6 +106,8 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flexDirection: "row",
+    flexWrap: "wrap",
+
   },
 
   locationText: {
