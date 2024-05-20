@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRoute } from '@react-navigation/native';
 import CSPSummary from '../ClientsSalesPersonOutput/cspSummary';
 import { getMeetingsByIdsRequest } from '../../store/salesPersons/actions';
-import { formatTime } from '../../util/datTimeFormat';
-import moment from 'moment';
+import { formatTime, formattedTime } from '../../util/datTimeFormat';
 
 function MeetingsList() {
   const dispatch = useDispatch();
@@ -20,25 +19,13 @@ function MeetingsList() {
     }
   }, [id, dispatch]);
     
-//     const startOfWeek = moment().startOf('isoWeek');
-//     console.log(startOfWeek,"startOfWeek")
-//   const endOfWeek = moment().endOf('isoWeek');
-
-//   const currentWeekMeetings = meetings
-//     .filter(meeting => {
-//         const meetingDate = moment(meeting.date);
-//       return meetingDate.isBetween(startOfWeek, endOfWeek, 'day', '[]');
-//     })
-//         .slice(0, 5); // Limit to 5 meetings
-    
-//     console.log(currentWeekMeetings,"currentWeekMeetings")
-
+    // const limitedMeetings = meetings ? meetings.slice(0, 5) : [];
 
   const renderItems = ({ item }) => (
     <View style={styles.itemContainer}>
       <Text style={styles.itemText}>{item.clientName}</Text>
       <Text style={styles.itemText}>{item.date}</Text>
-      <Text style={styles.itemText}>{formatTime(item.time)}</Text>
+      <Text style={styles.itemText}>{formattedTime(item.time)}</Text>
       <Text style={styles.itemText}>{item.schedule || 'Meeting'}</Text>
     </View>
   );
@@ -56,7 +43,8 @@ function MeetingsList() {
       <FlatList
         data={meetings}
         renderItem={renderItems}
-        keyExtractor={(item) => item._id}   
+        keyExtractor={(item) => item._id}  
+        scrollEnabled={true}      
       />
     </View>
   );

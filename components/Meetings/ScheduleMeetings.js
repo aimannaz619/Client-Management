@@ -21,7 +21,6 @@ function ScheduleMeetings() {
   const route = useRoute();
   const { id } = route.params
 
-  console.log(id,"Params")
   //HOOKS
   const dispatch = useDispatch();
   const toast = useToast();
@@ -109,7 +108,7 @@ function ScheduleMeetings() {
     const payload = {
       clientId: selectedItem,
       date: formattedDate(selectedDateTime?.date),
-      time: timeFormate2(selectedDateTime?.time),
+      time: (selectedDateTime?.time),
       salesPersonId: id,
       callbacks: {
         success: () => {
