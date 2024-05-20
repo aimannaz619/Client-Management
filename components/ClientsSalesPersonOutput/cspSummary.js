@@ -1,14 +1,28 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { GlobalStyles } from "../../Constants/styles";
+import { useState } from "react";
 
-function CSPSummary() {
+function CSPSummary({ headers }) {
+  const [expanded, setExpanded] = useState(false);
+  function toggleExpand() {
+    setExpanded(!expanded);
+  }
   return (
-    <View style={styles.rootHeader}>
-      <Text style={styles.title}>Name</Text>
-      <Text style={styles.title}>Phone number</Text>
-      <Text style={styles.title}>Email</Text>
-      <Text style={styles.title}>Location</Text>
-    </View>
+    <Pressable onPress={toggleExpand}>
+      <View style={styles.rootHeader}>
+        {Object.values(headers).map((header, index) => (
+          <View style={styles.title}>
+            <Text
+              numberOfLines={expanded ? null : 1}
+              ellipsizeMode="tail"
+              style={styles.titleText}
+            >
+              {header}
+            </Text>
+          </View>
+        ))}
+      </View>
+    </Pressable>
   );
 }
 
@@ -16,19 +30,25 @@ export default CSPSummary;
 
 const styles = StyleSheet.create({
   rootHeader: {
+    flex: 1,
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
-    padding: 15,
-    marginTop: 22,
-    backgroundColor: GlobalStyles.colors.darkGreen,
+    justifyContent: "space-between",
+    backgroundColor: GlobalStyles.colors.bottleGreen,
+    paddingVertical: 13,
+    marginVertical: 4,
+    elevation: 4,
+    borderRadius: 8,
     marginHorizontal: 14,
-    borderRadius:8
   },
+
   title: {
-    flex:1,
-    textalign:"center",
+    flex: 1,
+    padding: 10,
+  },
+  titleText: {
     fontSize: 18,
-    color: GlobalStyles.colors.white,
+    color: "white",
+    fontWeight: "bold",
   },
 });

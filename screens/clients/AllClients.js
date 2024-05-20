@@ -8,12 +8,20 @@ function AllClients() {
 
   const clients = useSelector((state) => state.clientReducer.clients);
 
-
   useEffect(() => {
     dispatch(fetchClientsRequest());
   }, [dispatch]);
- 
 
-  return <CSPOutput navigateTo="clientDetails" data={clients} />;
+  const headers = {
+    item1: "Name",
+    item2: "Phone Number",
+    item3: "Email",
+    item4: "Location",
+    item5: "Action",
+  };
+
+  return (
+    <CSPOutput navigateTo="clientDetails" data={clients} headers={headers} />
+  );
 }
 export default AllClients;
