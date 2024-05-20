@@ -20,8 +20,23 @@ function AllClients() {
     item5: "Action",
   };
 
+  // const itemsProps = {
+  //   id: item._id,
+  //   name: item.name,
+  //   phoneNumber: item.phone_number,
+  //   email: item.email,
+  //   location: item.address,
+  //   navigateTo: navigateTo,
+  // };
+
+  const requiredProps = ["name", "phone_number", "email"];
   return (
-    <CSPOutput navigateTo="clientDetails" data={clients} headers={headers} />
+    <CSPOutput
+      navigateTo="clientDetails"
+      data={clients}
+      headers={headers}
+      requiredProps={requiredProps}
+    />
   );
 }
 export default AllClients;

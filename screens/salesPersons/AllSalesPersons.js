@@ -19,10 +19,13 @@ function AllSalesPersons() {
     item4: "Location",
     item5: "Action",
   };
+
+  const requiredProps = ["name", "phone_number", "email"];
   return (
     <CSPOutput
       navigateTo="salesPersonDetails"
       data={salesPerson}
+      requiredProps={requiredProps}
       headers={headers}
     />
   );

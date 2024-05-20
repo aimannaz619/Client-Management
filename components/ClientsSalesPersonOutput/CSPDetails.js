@@ -15,11 +15,10 @@ function CSPDetails({
   buttonText,
   imageUrl,
   associatedClients,
-  meetingsList
+  meetingsList,
 }) {
-
-  const clients = associatedClients?.map(client => client.name);
-  const clientNames = clients?.join(', ');
+  const clients = associatedClients?.map((client) => client.name);
+  const clientNames = clients?.join(", ");
   return (
     <View style={styles.rootContainer}>
       <View style={styles.innerContainer}>
@@ -60,10 +59,6 @@ function CSPDetails({
         <Text style={[styles.textItem, styles.locationText]}>Location</Text>
         <LocationPicker location={location} />
       </View>
-      <View>
-        <MeetingsList data={meetingsList} />
-      </View>
-     
     </View>
   );
 }
@@ -107,7 +102,6 @@ const styles = StyleSheet.create({
   textContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-
   },
 
   locationText: {

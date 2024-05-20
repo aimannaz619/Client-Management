@@ -2,18 +2,22 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import CSPItem from "./cspItem";
 import CSPSummary from "./cspSummary";
 
-function CSPList({ navigateTo, data, headers }) {
+function CSPList({ navigateTo, data, headers, items, requiredProps }) {
   function renderItems(itemsData) {
-    const item = itemsData.item;
-    const itemsProps = {
-      id: item._id,
-      name: item.name,
-      phoneNumber: item.phone_number,
-      email: item.email,
-      location: item.address,
-      navigateTo: navigateTo,
-    };
-    return <CSPItem {...itemsProps} />;
+    const itemsProps = itemsData.item;
+    const id = itemsData.item.id;
+    console.log(requiredProps, "requiredProps");
+    const filteredProps = requiredProps?.reduce((acc, prop) => {
+      if (itemsProps[prop]) {
+        acc[prop] = itemsProps[prop];
+      }
+      return acc;
+    }, {});
+    
+
+    console.log(filteredProps, "filtered props");
+    console.log(itemsProps, "items props");
+    return <CSPItem items={filteredProps} id={id} navigateTo={navigateTo}/>;
   }
 
   function ListHeader() {

@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { GlobalStyles } from "../../Constants/styles";
 import { useState } from "react";
 import PrimaryButton from "../UI/PrimaryButton";
-function CSPItem({ name, phoneNumber, email, location, navigateTo, id }) {
+function CSPItem({ items, navigateTo, id }) {
   const navigation = useNavigation();
   const [expanded, setExpanded] = useState(false);
   function toggleExpand() {
@@ -23,26 +23,13 @@ function CSPItem({ name, phoneNumber, email, location, navigateTo, id }) {
   return (
     <Pressable onPress={handlePress}>
       <View style={styles.rootContainer}>
-        <View style={styles.textStyle}>
-          <Text numberOfLines={expanded ? null : 1} ellipsizeMode="tail">
-            {name}
-          </Text>
-        </View>
-        <View style={styles.textStyle}>
-          <Text numberOfLines={expanded ? null : 1} ellipsizeMode="tail">
-            {phoneNumber}
-          </Text>
-        </View>
-        <View style={styles.textStyle}>
-          <Text numberOfLines={expanded ? null : 1} ellipsizeMode="tail">
-            {email}
-          </Text>
-        </View>
-        <View style={styles.textStyle}>
-          <Text numberOfLines={expanded ? null : 1} ellipsizeMode="tail">
-            {location}
-          </Text>
-        </View>
+        {Object.values(items)?.map((item, index) => (
+          <View style={styles.textStyle}>
+            <Text numberOfLines={expanded ? null : 1} ellipsizeMode="tail">
+              {item}
+            </Text>
+          </View>
+        ))}
         <View style={styles.textStyle}>
           <PrimaryButton pressHandler={navigateHandler}>View</PrimaryButton>
         </View>

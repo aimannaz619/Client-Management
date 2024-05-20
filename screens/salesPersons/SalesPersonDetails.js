@@ -3,10 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import CSPDetails from "../../components/ClientsSalesPersonOutput/CSPDetails";
 import { useEffect } from "react";
 import { fetchSalesPersonById } from "../../store/salesPersons/actions";
+import MeetingsList from "../../components/Meetings/MeetingsList";
 function SalesPersonDetails({ route, navigation }) {
   const dispatch = useDispatch();
   const id = route.params?.id;
-  const salePerson = useSelector((state) => state.salesPersonReducer.salePerson);
+  const salePerson = useSelector(
+    (state) => state.salesPersonReducer.salePerson
+  );
 
   useEffect(() => {
     if (id) {
@@ -16,23 +19,26 @@ function SalesPersonDetails({ route, navigation }) {
 
   function navigateToScheduleMeeting() {
     navigation.navigate("scheduleMeeting", {
-      id
+      id,
     });
   }
 
   return (
-    <CSPDetails
-      name={salePerson?.salesPerson?.name}
-      phoneNumber={salePerson?.salesPerson?.phone_number}
-      email={salePerson?.salesPerson?.email}
-      location={salePerson?.salesPerson?.location}
-      imageUrl={salePerson?.salesPerson?.image}
-      associatedClients={salePerson?.associatedClients}
-      pressHandler={navigateToScheduleMeeting}
-      showButton={true}
-      buttonText="Schedule Meeting"
-      meetingsList={"ABC"}
-    />
+    <View>
+      <CSPDetails
+        name={salePerson?.salesPerson?.name}
+        phoneNumber={salePerson?.salesPerson?.phone_number}
+        email={salePerson?.salesPerson?.email}
+        location={salePerson?.salesPerson?.location}
+        imageUrl={salePerson?.salesPerson?.image}
+        associatedClients={salePerson?.associatedClients}
+        pressHandler={navigateToScheduleMeeting}
+        showButton={true}
+        buttonText="Schedule Meeting"
+        meetingsList={"ABC"}
+      />
+      <MeetingsList />
+    </View>
   );
 }
 export default SalesPersonDetails;
