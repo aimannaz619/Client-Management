@@ -1,37 +1,38 @@
-import { StyleSheet, Text, View } from "react-native";
-import { GlobalStyles } from "../../Constants/styles";
- 
-function CSPSummary({headers}) {
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { GlobalStyles } from '../../Constants/styles';
+
+const CSPSummary = ({ headers }) => {
   return (
-    <View style={styles.rootHeader}>
-      <Text style={styles.title}>{headers.client}</Text>
-      <Text style={styles.title}> {headers.date}</Text>
-      <Text style={styles.title}>{headers.time}</Text>
-      <Text style={styles.title}>{headers.schedule}</Text>
+    <View style={styles.headerContainer}>
+      {Object.values(headers).map((header, index) => (
+        <Text key={index} style={styles.headerText}>
+          {header}
+        </Text>
+      ))}
     </View>
   );
-}
- 
-export default CSPSummary;
- 
+};
+
 const styles = StyleSheet.create({
-  rootHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 15,
-    marginTop: 22,
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
     backgroundColor: GlobalStyles.colors.bottleGreen,
-    marginHorizontal: 14,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
     borderRadius: 8,
-    width: "100%",
-    alignSelf: "center",
+    marginTop: 15,
   },
-  title: {
-    flex:1,
-    textalign:"center",
-    fontSize: 18,
+  headerText: {
+    flex: 1,
+    textAlign: 'center',
+    fontSize: 15,
     color: GlobalStyles.colors.white,
-    fontWeight:'bold'
+    fontWeight: 'bold',
   },
 });
+
+export default CSPSummary;

@@ -6,7 +6,7 @@ import { fetchSalesPersonById } from "../../store/salesPersons/actions";
 function SalesPersonDetails({ route, navigation }) {
   const dispatch = useDispatch();
   const id = route.params?.id;
-  const salePerson = useSelector((state) => state.salesPerson.salePerson);
+  const salePerson = useSelector((state) => state.salesPersonReducer.salePerson);
 
   useEffect(() => {
     if (id) {
@@ -15,7 +15,9 @@ function SalesPersonDetails({ route, navigation }) {
   }, [id]);
 
   function navigateToScheduleMeeting() {
-    navigation.navigate("scheduleMeeting");
+    navigation.navigate("scheduleMeeting", {
+      id
+    });
   }
 
   return (

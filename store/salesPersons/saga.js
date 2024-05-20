@@ -4,6 +4,7 @@ import { takeLatest, call, put, all, fork, take } from "redux-saga/effects";
 import {
   fetchSalesPersonByIdService,
   fetchSalesPersons,
+  fetchSpsMeetingsByIdService,
   saveMeetingService,
 } from "../../services/salesPersonService";
 import {
@@ -12,6 +13,9 @@ import {
   FETCH_SP_REQUEST,
   FETCH_SP_SUCCESS,
   SAVE_MEETING,
+  FETCH_MEETINGS_BY_ID_SUCCESS,
+  FETCH_MEETINGS_BY_ID_FAILURE,
+  FETCH_MEETINGS_BY_ID_REQUEST
 } from "./actionTypes";
 
 function* fetchSpsSaga() {
@@ -50,6 +54,15 @@ function* saveMeetingSaga(action) {
   } catch (error) {}
 }
 
+function* fetchMeetingsByIdSaga(action) {
+  try {
+    const meetingsById = yield call(fetchSpsMeetingsByIdService, action.payload);
+    yield put({ type: FETCH_MEETINGS_BY_ID_SUCCESS, payload: meetingsById });
+  } catch (error) {
+
+  }
+}
+
 function* watchSpsSaga() {
   yield takeLatest(FETCH_SP_REQUEST, fetchSpsSaga);
 }
@@ -61,12 +74,16 @@ function* watchFetchSPByIdSaga() {
 function* watchSaveMeetingSaga() {
   yield takeLatest(SAVE_MEETING, saveMeetingSaga);
 }
+function* watchSPMeetingsByIdSaga() {
+  yield takeLatest(FETCH_MEETINGS_BY_ID_REQUEST, fetchMeetingsByIdSaga);
+}
 
 export function* salesPersonsSaga() {
   yield all([
     fork(watchSpsSaga),
     fork(watchFetchSPByIdSaga),
     fork(watchSaveMeetingSaga),
+    fork(watchSPMeetingsByIdSaga)
   ]);
 }
 

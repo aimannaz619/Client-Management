@@ -3,7 +3,6 @@ import { Button, Pressable, StyleSheet, Text, View } from "react-native";
 import { useToast } from "react-native-toast-notifications";
 import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-
 import IconButton from "../UI/IconButton";
 import { GlobalStyles } from "../../Constants/styles";
 import PrimaryButton from "../UI/PrimaryButton";
@@ -15,9 +14,14 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 import { saveMeetingAction } from "../../store/salesPersons/actions";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
-function ScheduleMeetings({route}) {
+function ScheduleMeetings() {
+
+  const route = useRoute();
+  const { id } = route.params
+
+  console.log(id,"Params")
   //HOOKS
   const dispatch = useDispatch();
   const toast = useToast();
@@ -104,12 +108,11 @@ function ScheduleMeetings({route}) {
   };
 
   function saveMeetingHandler() {
-    console.log(route.params.id,"Route id")
     const payload = {
       clientId: selectedItem,
       date: formattedDate(selectedDateTime?.date),
       time: timeFormate2(selectedDateTime?.time),
-      salesPersonId: route.params.id,
+      salesPersonId: id,
       callbacks: {
         success: () => {
           toast.show("Your meeting is scheduled successfully", {
@@ -117,7 +120,9 @@ function ScheduleMeetings({route}) {
             placement: "top",
             offset: 300,
           });
-          navigation.navigate("salesPersonDetails");
+          navigation.navigate("salesPersonDetails", {id
+
+          });
         },
         failure: () => {
           toast.show("Failed Request", {

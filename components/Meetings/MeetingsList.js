@@ -1,46 +1,79 @@
-import {FlatList, View, Text} from "react-native";
-import CSPSummary from "../ClientsSalesPersonOutput/cspSummary";
+import React, { useEffect } from 'react';
+import { FlatList, View, Text, StyleSheet } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRoute } from '@react-navigation/native';
+import CSPSummary from '../ClientsSalesPersonOutput/cspSummary';
+import { getMeetingsByIdsRequest } from '../../store/salesPersons/actions';
+import { formatTime } from '../../util/datTimeFormat';
+import moment from 'moment';
 
-function MeetingsList({ }) {
-    
-    const data = [
-        { id: "1", client: "Client 1", date: "2024-05-20", time: "10:00 AM", schedule: "Meeting" },
-        { id: "2", client: "Client 2", date: "2024-05-21", time: "11:00 AM", schedule: "Call" },
-        { id: "3", client: "Client 3", date: "2024-05-22", time: "12:00 PM", schedule: "Meeting" },
-    ];
-    
-    const renderItems = ({ item }) => (
-        <View style={{ flexDirection: "row", padding: 10 }}>
-          <Text style={{ flex: 1 }}>{item.client}</Text>
-          <Text style={{ flex: 1 }}>{item.date}</Text>
-          <Text style={{ flex: 1 }}>{item.time}</Text>
-          <Text style={{ flex: 1 }}>{item.schedule}</Text>
-        </View>
-    );
-    
-    const headers = {
-        client: "Client",
-        date: "Date",
-        time: "Time",
-        schedule: "Schedule",
-    
-      }
+function MeetingsList() {
+  const dispatch = useDispatch();
+  const route = useRoute();
+  const { id } = route.params;
 
-      
-    return (
- <View>
-   <CSPSummary headers={headers} />
-    <FlatList
-      data={data}
-      renderItem={renderItems}
-      keyExtractor={(item) => item._id}
-    >
-                
-    </FlatList>
+    const meetings = useSelector((state) => state.salesPersonReducer.meetingsById);
 
-        </View>
-  
+  useEffect(() => {
+    if (id) {
+      dispatch(getMeetingsByIdsRequest(id));
+    }
+  }, [id, dispatch]);
+    
+//     const startOfWeek = moment().startOf('isoWeek');
+//     console.log(startOfWeek,"startOfWeek")
+//   const endOfWeek = moment().endOf('isoWeek');
+
+//   const currentWeekMeetings = meetings
+//     .filter(meeting => {
+//         const meetingDate = moment(meeting.date);
+//       return meetingDate.isBetween(startOfWeek, endOfWeek, 'day', '[]');
+//     })
+//         .slice(0, 5); // Limit to 5 meetings
+    
+//     console.log(currentWeekMeetings,"currentWeekMeetings")
+
+
+  const renderItems = ({ item }) => (
+    <View style={styles.itemContainer}>
+      <Text style={styles.itemText}>{item.clientName}</Text>
+      <Text style={styles.itemText}>{item.date}</Text>
+      <Text style={styles.itemText}>{formatTime(item.time)}</Text>
+      <Text style={styles.itemText}>{item.schedule || 'Meeting'}</Text>
+    </View>
+  );
+
+  const headers = {
+    clientName: 'Name',
+    date: 'Date',
+    time: 'Time',
+    schedule: 'Schedule',
+  };
+
+  return (
+    <View>
+      <CSPSummary headers={headers} />
+      <FlatList
+        data={meetings}
+        renderItem={renderItems}
+        keyExtractor={(item) => item._id}   
+      />
+    </View>
   );
 }
 
 export default MeetingsList;
+
+const styles = StyleSheet.create({
+  itemContainer: {
+    flexDirection: 'row',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  itemText: {
+    flex: 1,
+    textAlign: 'center',
+  },
+});
