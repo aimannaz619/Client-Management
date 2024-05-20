@@ -1,62 +1,81 @@
-import React, { useEffect } from 'react';
-import { FlatList, View, Text, StyleSheet } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRoute } from '@react-navigation/native';
-import CSPSummary from '../ClientsSalesPersonOutput/cspSummary';
-import { getMeetingsByIdsRequest } from '../../store/salesPersons/actions';
-import { formatTime } from '../../util/datTimeFormat';
-import moment from 'moment';
+import React, { useEffect } from "react";
+import { FlatList, View, Text, StyleSheet } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import CSPSummary from "../ClientsSalesPersonOutput/cspSummary";
+import { getMeetingsByIdsRequest } from "../../store/salesPersons/actions";
+import { formattedTime } from "../../util/datTimeFormat";
 
-function MeetingsList() {
+import PrimaryButton from "../UI/PrimaryButton";
+
+
+function MeetingsList({ headers }) {
   const dispatch = useDispatch();
+  const navigation = useNavigation()
   const route = useRoute();
   const { id } = route.params;
 
-    const meetings = useSelector((state) => state.salesPersonReducer.meetingsById);
+  const meetings = useSelector(
+    (state) => state.salesPersonReducer.meetingsById
+  );
 
   useEffect(() => {
     if (id) {
       dispatch(getMeetingsByIdsRequest(id));
     }
   }, [id, dispatch]);
-    
-//     const startOfWeek = moment().startOf('isoWeek');
-//     console.log(startOfWeek,"startOfWeek")
-//   const endOfWeek = moment().endOf('isoWeek');
 
-//   const currentWeekMeetings = meetings
-//     .filter(meeting => {
-//         const meetingDate = moment(meeting.date);
-//       return meetingDate.isBetween(startOfWeek, endOfWeek, 'day', '[]');
-//     })
-//         .slice(0, 5); // Limit to 5 meetings
-    
-//     console.log(currentWeekMeetings,"currentWeekMeetings")
+ 
 
+  function navigateHandler() {
+    navigation.navigate("clientDetails", {
+      id: id,
+    });
+  }
 
   const renderItems = ({ item }) => (
-    <View style={styles.itemContainer}>
-      <Text style={styles.itemText}>{item.clientName}</Text>
-      <Text style={styles.itemText}>{item.date}</Text>
-      <Text style={styles.itemText}>{formatTime(item.time)}</Text>
-      <Text style={styles.itemText}>{item.schedule || 'Meeting'}</Text>
-    </View>
+    console.log(item.time, "item .time"),
+    (
+      <View style={styles.itemContainer}>
+        <View style={styles.itemText}>
+          <Text>{item.clientName}</Text>
+        </View>
+        <View style={styles.itemText}>
+          <Text>{item.date}</Text>
+        </View>
+        <View style={styles.itemText}>
+          <Text>{formattedTime(item.time)}</Text>
+        </View>
+        <View style={styles.itemText}>
+          <PrimaryButton pressHandler={navigateHandler}>View</PrimaryButton>
+        </View>
+      </View>
+    )
+
+    // function renderItems(itemsData) {
+    //   const item = itemsData.item;
+    //   const itemsProps = {
+    //     id: item._id,
+    //     item1: item.clientName,
+    //     item2: item.date,
+    //     item3: formattedTime(item.time),
+    //     navigateTo: navigateTo,
+    //   };
+    //   return <CSPItem {...itemsProps} />;
+    // }
   );
 
-  const headers = {
-    clientName: 'Name',
-    date: 'Date',
-    time: 'Time',
-    schedule: 'Schedule',
-  };
+  function header() {
+    return <CSPSummary headers={headers} />;
+  }
 
   return (
     <View>
-      <CSPSummary headers={headers} />
       <FlatList
         data={meetings}
         renderItem={renderItems}
-        keyExtractor={(item) => item._id}   
+        keyExtractor={(item) => item._id}
+        ListHeaderComponent={header}
       />
     </View>
   );
@@ -66,14 +85,14 @@ export default MeetingsList;
 
 const styles = StyleSheet.create({
   itemContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: "#ccc",
   },
   itemText: {
     flex: 1,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });

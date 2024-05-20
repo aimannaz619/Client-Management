@@ -7,10 +7,10 @@ function CSPList({ navigateTo, data, headers }) {
     const item = itemsData.item;
     const itemsProps = {
       id: item._id,
-      name: item.name,
-      phoneNumber: item.phone_number,
-      email: item.email,
-      location: item.address,
+      item1: item.name,
+      item2: item.phone_number,
+      item3: item.email,
+      item4: item.address,
       navigateTo: navigateTo,
     };
     return <CSPItem {...itemsProps} />;

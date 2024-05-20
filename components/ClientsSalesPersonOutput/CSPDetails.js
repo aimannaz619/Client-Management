@@ -15,7 +15,8 @@ function CSPDetails({
   buttonText,
   imageUrl,
   associatedClients,
-  meetingsList
+  meetingsList,
+  headers
 }) {
 
   const clients = associatedClients?.map(client => client.name);
@@ -61,7 +62,7 @@ function CSPDetails({
         <LocationPicker location={location} />
       </View>
       <View>
-        <MeetingsList data={meetingsList} />
+        <MeetingsList data={meetingsList} headers={headers} />
       </View>
      
     </View>
