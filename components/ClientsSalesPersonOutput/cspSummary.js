@@ -10,7 +10,7 @@ function CSPSummary({ headers }) {
   return (
     <Pressable onPress={toggleExpand}>
       <View style={styles.rootHeader}>
-        {Object.values(headers).map((header, index) => (
+        {Object.values(headers)?.map((header, index) => (
           <View style={styles.title}>
             <Text
               numberOfLines={expanded ? null : 1}
