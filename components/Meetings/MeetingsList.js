@@ -1,50 +1,70 @@
-import React, { useEffect } from 'react';
-import { FlatList, View, Text, StyleSheet } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRoute } from '@react-navigation/native';
-import CSPSummary from '../ClientsSalesPersonOutput/cspSummary';
-import { getMeetingsByIdsRequest } from '../../store/salesPersons/actions';
-import { formatTime, formattedTime } from '../../util/datTimeFormat';
+import React, { useEffect } from "react";
+import { FlatList, View, Text, StyleSheet } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import CSPSummary from "../ClientsSalesPersonOutput/cspSummary";
+import { getMeetingsByIdsRequest } from "../../store/salesPersons/actions";
+import { formattedTime } from "../../util/datTimeFormat";
+import PrimaryButton from "../UI/PrimaryButton";
+import { Ionicons } from '@expo/vector-icons';543wx
 
-function MeetingsList() {
+function MeetingsList({ headers }) {
   const dispatch = useDispatch();
+  const navigation = useNavigation()
   const route = useRoute();
   const { id } = route.params;
 
-    const meetings = useSelector((state) => state.salesPersonReducer.meetingsById);
+  const meetings = useSelector(
+    (state) => state.salesPersonReducer.meetingsById
+  );
 
   useEffect(() => {
     if (id) {
       dispatch(getMeetingsByIdsRequest(id));
     }
   }, [id, dispatch]);
-    
-    // const limitedMeetings = meetings ? meetings.slice(0, 5) : [];
+
+ 
+
+  function navigateHandler(id) {
+    navigation.navigate("clientDetails", {
+      id: id,
+    });
+  }
 
   const renderItems = ({ item }) => (
-    <View style={styles.itemContainer}>
-      <Text style={styles.itemText}>{item.clientName}</Text>
-      <Text style={styles.itemText}>{item.date}</Text>
-      <Text style={styles.itemText}>{formattedTime(item.time)}</Text>
-      <Text style={styles.itemText}>{item.schedule || 'Meeting'}</Text>
-    </View>
+    (
+      <View style={styles.itemContainer}>
+        <View style={styles.itemText}>
+          <Text>{item.clientName}</Text>
+        </View>
+        <View style={styles.itemText}>
+          <Text>{item.date}</Text>
+        </View>
+        <View style={styles.itemText}>
+          <Text>{formattedTime(item.time)}</Text>
+        </View>
+        <View style={styles.itemIcon}>
+                  <Ionicons name="eye" size={24} color="black"
+                    onPress={() => navigateHandler(item.clientId)} 
+ />
+      </View>
+      </View>
+    )
+
   );
 
-  const headers = {
-    clientName: 'Name',
-    date: 'Date',
-    time: 'Time',
-    schedule: 'Schedule',
-  };
+  function header() {
+    return <CSPSummary headers={headers} />;
+  }
 
   return (
     <View>
-      <CSPSummary headers={headers} />
       <FlatList
         data={meetings}
         renderItem={renderItems}
-        keyExtractor={(item) => item._id}  
-        scrollEnabled={true}      
+        keyExtractor={(item) => item._id}
+        ListHeaderComponent={header}
       />
     </View>
   );
@@ -54,14 +74,20 @@ export default MeetingsList;
 
 const styles = StyleSheet.create({
   itemContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: "#ccc",
   },
   itemText: {
     flex: 1,
-    textAlign: 'center',
-  },
+    textAlign: "center",
+    },
+    itemIcon: {
+        width: 30,
+        height: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
 });

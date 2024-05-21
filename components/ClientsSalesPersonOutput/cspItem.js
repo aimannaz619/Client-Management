@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { GlobalStyles } from "../../Constants/styles";
 import { useState } from "react";
 import PrimaryButton from "../UI/PrimaryButton";
-function CSPItem({ name, phoneNumber, email, location, navigateTo, id }) {
+function CSPItem({ item1, item2, item3, item4, navigateTo, id }) {
   const navigation = useNavigation();
   const [expanded, setExpanded] = useState(false);
   function toggleExpand() {
@@ -25,22 +25,22 @@ function CSPItem({ name, phoneNumber, email, location, navigateTo, id }) {
       <View style={styles.rootContainer}>
         <View style={styles.textStyle}>
           <Text numberOfLines={expanded ? null : 1} ellipsizeMode="tail">
-            {name}
+            {item1}
           </Text>
         </View>
         <View style={styles.textStyle}>
           <Text numberOfLines={expanded ? null : 1} ellipsizeMode="tail">
-            {phoneNumber}
+            {item2}
           </Text>
         </View>
         <View style={styles.textStyle}>
           <Text numberOfLines={expanded ? null : 1} ellipsizeMode="tail">
-            {email}
+            {item3}
           </Text>
         </View>
         <View style={styles.textStyle}>
           <Text numberOfLines={expanded ? null : 1} ellipsizeMode="tail">
-            {location}
+            {item4}
           </Text>
         </View>
         <View style={styles.textStyle}>
