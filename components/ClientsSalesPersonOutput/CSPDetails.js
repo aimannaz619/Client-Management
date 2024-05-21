@@ -4,6 +4,14 @@ import LocationPicker from "./LocationPicker";
 import PrimaryButton from "../UI/PrimaryButton";
 import CSPSummary from "./cspSummary";
 import MeetingsList from "../Meetings/MeetingsList";
+import SalesPersonDetails from "../../screens/salesPersons/SalesPersonDetails";
+import { useNavigationState } from '@react-navigation/native';
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useRoute } from "@react-navigation/native";
+import { fetchSalesPersonById } from "../../store/salesPersons/actions";
+import { useSelector } from "react-redux";
+
 
 function CSPDetails({
   name,
@@ -20,7 +28,23 @@ function CSPDetails({
 }) {
 
   const clients = associatedClients?.map(client => client.name);
+  console.log(associatedClients,"associated clients")
   const clientNames = clients?.join(', ');
+  const currentRoute = useNavigationState(state => state.routes[state.index].name);
+  const salePerson = useSelector(
+    (state) => state.salesPersonReducer.salePerson
+  );
+  console.log(salePerson?.associatedClients[0]?.salesPersonName,"sales person")
+  const dispatch = useDispatch();
+  const route = useRoute()
+  const { id } = route.params;
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchSalesPersonById(id));
+    }
+  }, [id]);
+  console.log(id, "iD")
+  console.log(salePerson,"sales")
   return (
     <View style={styles.rootContainer}>
       <View style={styles.innerContainer}>
@@ -44,10 +68,19 @@ function CSPDetails({
             <Text style={styles.textItem}>Phone Number:</Text>
             <Text>{phoneNumber}</Text>
           </View>
+          {currentRoute === 'salesPersonDetails' ? (
+        SalesPersonDetails && (
           <View style={styles.textContainer}>
             <Text style={styles.textItem}>Associated Clients:</Text>
             <Text>{clientNames}</Text>
           </View>
+        )
+      ) : (
+        <View style={styles.textContainer}>
+                <Text style={styles.textItem}>Associated Sales Person:</Text>
+                <Text>{salePerson?.associatedClients[0]?.salesPersonName}</Text>
+        </View>
+      )}
           {showButton && (
             <View style={styles.buttonStyle}>
               <PrimaryButton pressHandler={pressHandler}>

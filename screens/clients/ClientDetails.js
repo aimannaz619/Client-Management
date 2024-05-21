@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import CSPDetails from "../../components/ClientsSalesPersonOutput/CSPDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { getClientsByIdsRequest } from "../../store/clients/actions";
+
 function ClientDetailsScreen({ route }) {
   const dispatch = useDispatch();
   // const clients = useSelector((state) => state.client.clients);
