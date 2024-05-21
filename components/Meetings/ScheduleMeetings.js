@@ -17,11 +17,10 @@ import { saveMeetingAction } from "../../store/salesPersons/actions";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 function ScheduleMeetings() {
-
   const route = useRoute();
-  const { id } = route.params
+  const { id } = route.params;
 
-  console.log(id,"Params")
+  console.log(id, "Params");
   //HOOKS
   const dispatch = useDispatch();
   const toast = useToast();
@@ -31,6 +30,9 @@ function ScheduleMeetings() {
 
   const salePerson = useSelector(
     (state) => state.salesPersonReducer.salePerson
+  );
+  const meetings = useSelector(
+    (state) => state.salesPersonReducer.meetingsById
   );
 
   //States
@@ -105,11 +107,13 @@ function ScheduleMeetings() {
     hideTimePicker();
   };
 
+  console.log(selectedDateTime?.time, "selectedDateTime?.time");
+
   function saveMeetingHandler() {
     const payload = {
       clientId: selectedItem,
       date: formattedDate(selectedDateTime?.date),
-      time: timeFormate2(selectedDateTime?.time),
+      time: selectedDateTime?.time,
       salesPersonId: id,
       callbacks: {
         success: () => {
@@ -118,9 +122,7 @@ function ScheduleMeetings() {
             placement: "top",
             offset: 300,
           });
-          navigation.navigate("salesPersonDetails", {id
-
-          });
+          navigation.navigate("salesPersonDetails", { id });
         },
         failure: () => {
           toast.show("Failed Request", {
@@ -130,87 +132,95 @@ function ScheduleMeetings() {
       },
     };
 
+    console.log(payload, "payload");
+
     dispatch(saveMeetingAction(payload));
   }
 
   return (
     <View style={styles.rootContainer}>
-      <View style={styles.outerContainer}>
-        <View style={styles.innerContainer}>
-          <Text style={styles.textStyle}>Associated Clients :</Text>
-          <DropDownPicker
-            style={styles.dropDownStyle}
-            open={open}
-            schema={{
-              label: "name",
-              value: "_id",
-            }}
-            value={selectedItem}
-            items={items}
-            setOpen={setOpen}
-            setValue={setSelectedItem}
-            setItems={setItems}
-            placeholder="Select a client"
-            placeholderStyle={{
-              fontSize: 15,
-            }}
-          />
+      {meetings.length < 5 ? (
+        <View style={styles.outerContainer}>
+          <View style={styles.innerContainer}>
+            <Text style={styles.textStyle}>Associated Clients :</Text>
+            <DropDownPicker
+              style={styles.dropDownStyle}
+              open={open}
+              schema={{
+                label: "name",
+                value: "_id",
+              }}
+              value={selectedItem}
+              items={items}
+              setOpen={setOpen}
+              setValue={setSelectedItem}
+              setItems={setItems}
+              placeholder="Select a client"
+              placeholderStyle={{
+                fontSize: 15,
+              }}
+            />
 
-          <Pressable onPress={showDatePicker}>
-            <View style={styles.dateTimeStyle}>
-              <IconButton
-                name="calendar-number-outline"
-                size={25}
-                onPress={showDatePicker}
-                style={styles.buttonStyle}
-              />
+            <Pressable onPress={showDatePicker}>
+              <View style={styles.dateTimeStyle}>
+                <IconButton
+                  name="calendar-number-outline"
+                  size={25}
+                  onPress={showDatePicker}
+                  style={styles.buttonStyle}
+                />
 
-              <Text style={styles.innerText}>
-                {selectedDateTime?.date
-                  ? formattedDate(selectedDateTime.date)
-                  : "Select Date"}
-              </Text>
-              <DateTimePickerModal
-                isVisible={isDatePickerVisible.date}
-                mode="date"
-                onConfirm={handleDateConfirm}
-                onCancel={hideDatePicker}
-                maximumDate={maxDate}
-                minimumDate={new Date()}
-              />
+                <Text style={styles.innerText}>
+                  {selectedDateTime?.date
+                    ? formattedDate(selectedDateTime.date)
+                    : "Select Date"}
+                </Text>
+                <DateTimePickerModal
+                  isVisible={isDatePickerVisible.date}
+                  mode="date"
+                  onConfirm={handleDateConfirm}
+                  onCancel={hideDatePicker}
+                  maximumDate={maxDate}
+                  minimumDate={new Date()}
+                />
+              </View>
+            </Pressable>
+            <Pressable onPress={showTimePicker}>
+              <View style={styles.dateTimeStyle}>
+                <IconButton
+                  name="time-outline"
+                  size={25}
+                  onPress={showTimePicker}
+                  style={styles.buttonStyle}
+                />
+                <Text style={styles.innerText}>
+                  {" "}
+                  {selectedDateTime?.time
+                    ? formattedTime(selectedDateTime?.time)
+                    : "Select Time"}
+                </Text>
+                <DateTimePickerModal
+                  isVisible={isDatePickerVisible.time}
+                  mode="time"
+                  onConfirm={handleTimeConfirm}
+                  onCancel={hideTimePicker}
+                  ShowUpDown={true}
+                />
+              </View>
+            </Pressable>
+
+            <View style={styles.saveButtonStyle}>
+              <PrimaryButton pressHandler={saveMeetingHandler}>
+                Save Meeting
+              </PrimaryButton>
             </View>
-          </Pressable>
-          <Pressable onPress={showTimePicker}>
-            <View style={styles.dateTimeStyle}>
-              <IconButton
-                name="time-outline"
-                size={25}
-                onPress={showTimePicker}
-                style={styles.buttonStyle}
-              />
-              <Text style={styles.innerText}>
-                {" "}
-                {selectedDateTime?.time
-                  ? formattedTime(selectedDateTime?.time)
-                  : "Select Time"}
-              </Text>
-              <DateTimePickerModal
-                isVisible={isDatePickerVisible.time}
-                mode="time"
-                onConfirm={handleTimeConfirm}
-                onCancel={hideTimePicker}
-                ShowUpDown={true}
-              />
-            </View>
-          </Pressable>
-
-          <View style={styles.saveButtonStyle}>
-            <PrimaryButton pressHandler={saveMeetingHandler}>
-              Save Meeting
-            </PrimaryButton>
           </View>
         </View>
-      </View>
+      ) : (
+        <View style={styles.textView}>
+          <Text style = {styles.text}>Can't Schedule meetings more then 5</Text>
+        </View>
+      )}
     </View>
   );
 }
@@ -218,6 +228,18 @@ function ScheduleMeetings() {
 export default ScheduleMeetings;
 
 const styles = StyleSheet.create({
+  textView: {
+    flex: 1,
+
+    justifyContent: "center",
+    alignItems:"center"
+  },
+  text: {
+    fontSize: 18,
+    fontWeight:"bold"
+    
+    
+  },
   rootContainer: {
     flex: 1,
 

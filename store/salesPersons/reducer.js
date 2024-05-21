@@ -36,6 +36,7 @@ const salesPersonReducer = (state = initialState, action) => {
       case FETCH_MEETINGS_BY_ID_REQUEST:
         return {
           ...state,
+          meetingsById: {},
           loading: true,
           error: null,
         };
