@@ -13,6 +13,7 @@ function CSPDetails({
   pressHandler,
   showButton,
   buttonText,
+  person,
 
   associatedClients,
 }) {
@@ -42,7 +43,7 @@ function CSPDetails({
             <Text>{phoneNumber}</Text>
           </View>
           <View style={styles.textContainer}>
-            <Text style={styles.textItem}>Associated Clients:</Text>
+            <Text style={styles.textItem}>Associated {person}:</Text>
             <Text>{clientNames}</Text>
           </View>
           {showButton && (
