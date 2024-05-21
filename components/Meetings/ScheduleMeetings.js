@@ -13,14 +13,17 @@ import {
 } from "../../util/datTimeFormat";
 import { useDispatch, useSelector } from "react-redux";
 
-import { saveMeetingAction } from "../../store/salesPersons/actions";
+import {
+  fetchSalesPersonById,
+  getMeetingsByIdsRequest,
+  saveMeetingAction,
+} from "../../store/salesPersons/actions";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 function ScheduleMeetings() {
   const route = useRoute();
   const { id } = route.params;
 
-  console.log(id, "Params");
   //HOOKS
   const dispatch = useDispatch();
   const toast = useToast();
@@ -38,6 +41,8 @@ function ScheduleMeetings() {
   //States
   const [open, setOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+
+  const [exceededLimit, setExceededLimit] = useState(false);
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState({
     date: false,
@@ -58,6 +63,11 @@ function ScheduleMeetings() {
 
   //useEffects
 
+  useEffect(() => {
+    if (Object.values(meetings).length >= 5) {
+      setExceededLimit(true);
+    }
+  }, [meetings]);
   useEffect(() => {
     if (salePerson.associatedClients) {
       setItems(salePerson.associatedClients);
@@ -107,8 +117,6 @@ function ScheduleMeetings() {
     hideTimePicker();
   };
 
-  console.log(selectedDateTime?.time, "selectedDateTime?.time");
-
   function saveMeetingHandler() {
     const payload = {
       clientId: selectedItem,
@@ -122,6 +130,7 @@ function ScheduleMeetings() {
             placement: "top",
             offset: 300,
           });
+          dispatch(getMeetingsByIdsRequest(id));
           navigation.navigate("salesPersonDetails", { id });
         },
         failure: () => {
@@ -132,14 +141,16 @@ function ScheduleMeetings() {
       },
     };
 
-    console.log(payload, "payload");
-
     dispatch(saveMeetingAction(payload));
   }
 
   return (
     <View style={styles.rootContainer}>
-      {meetings.length < 5 ? (
+      {exceededLimit ? (
+        <View style={styles.textView}>
+          <Text style={styles.text}>Can't Schedule meetings more then 5</Text>
+        </View>
+      ) : (
         <View style={styles.outerContainer}>
           <View style={styles.innerContainer}>
             <Text style={styles.textStyle}>Associated Clients :</Text>
@@ -216,10 +227,6 @@ function ScheduleMeetings() {
             </View>
           </View>
         </View>
-      ) : (
-        <View style={styles.textView}>
-          <Text style = {styles.text}>Can't Schedule meetings more then 5</Text>
-        </View>
       )}
     </View>
   );
@@ -232,13 +239,11 @@ const styles = StyleSheet.create({
     flex: 1,
 
     justifyContent: "center",
-    alignItems:"center"
+    alignItems: "center",
   },
   text: {
     fontSize: 18,
-    fontWeight:"bold"
-    
-    
+    fontWeight: "bold",
   },
   rootContainer: {
     flex: 1,

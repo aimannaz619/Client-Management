@@ -1,28 +1,34 @@
-import React, { useEffect } from "react";
-import { FlatList, View, Text, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  FlatList,
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  ScrollView,
+} from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import CSPSummary from "../ClientsSalesPersonOutput/cspSummary";
 import { getMeetingsByIdsRequest } from "../../store/salesPersons/actions";
 import { formattedTime } from "../../util/datTimeFormat";
 import PrimaryButton from "../UI/PrimaryButton";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
+import { GlobalStyles } from "../../Constants/styles";
 
-function MeetingsList({ headers }) {
+function MeetingsList({ headers, meetings }) {
   const dispatch = useDispatch();
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const route = useRoute();
   const { id } = route.params;
+  const [expanded, setExpanded] = useState(false);
+  function toggleExpand() {
+    setExpanded(!expanded);
+  }
 
-  const meetings = useSelector(
-    (state) => state.salesPersonReducer.meetingsById
-  );
-
-  useEffect(() => {
-    if (id) {
-      dispatch(getMeetingsByIdsRequest(id));
-    }
-  }, [id, dispatch]);
+  function handlePress() {
+    toggleExpand();
+  }
 
  
 
@@ -32,41 +38,44 @@ function MeetingsList({ headers }) {
     });
   }
 
-  const renderItems = ({ item }) => (
-    (
-      <View style={styles.itemContainer}>
-        <View style={styles.itemText}>
-          <Text>{item.clientName}</Text>
-        </View>
-        <View style={styles.itemText}>
-          <Text>{item.date}</Text>
-        </View>
-        <View style={styles.itemText}>
-          <Text>{formattedTime(item.time)}</Text>
-        </View>
-        <View style={styles.itemIcon}>
-                  <Ionicons name="eye" size={24} color="black"
-                    onPress={() => navigateHandler(item.clientId)} 
- />
-      </View>
-      </View>
-    )
-
-  );
-
   function header() {
     return <CSPSummary headers={headers} />;
   }
 
+ 
+
   return (
-    <View>
-      <FlatList
-        data={meetings}
-        renderItem={renderItems}
-        keyExtractor={(item) => item._id}
-        ListHeaderComponent={header}
-      />
-    </View>
+    <ScrollView>
+      {header()}
+      {Object.values(meetings)?.map((item) => (
+        <Pressable key={item._id} onPress={handlePress}>
+          <View style={styles.itemContainer}>
+            <View style={styles.itemText}>
+              <Text numberOfLines={expanded ? null : 1} ellipsizeMode="tail">
+                {item.clientName}
+              </Text>
+            </View>
+            <View style={styles.itemText}>
+              <Text numberOfLines={expanded ? null : 1} ellipsizeMode="tail">
+                {item.date}
+              </Text>
+            </View>
+            <View style={styles.itemText}>
+              <Text numberOfLines={expanded ? null : 1} ellipsizeMode="tail">
+                {formattedTime(item.time)}
+              </Text>
+            </View>
+            <View style={styles.itemText}>
+              <PrimaryButton
+                pressHandler={() => navigateHandler(item.clientId)}
+              >
+                View
+              </PrimaryButton>
+            </View>
+          </View>
+        </Pressable>
+      ))}
+    </ScrollView>
   );
 }
 
@@ -75,19 +84,17 @@ export default MeetingsList;
 const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: "row",
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    alignItems: "center",
+    justifyContent: "space-between",
+    // backgroundColor: GlobalStyles.colors.lightGreen,
+    marginVertical: 4,
+    // elevation: 4,
+    borderRadius: 8,
+    marginHorizontal: 14,
+    borderBottomWidth: 2,
   },
   itemText: {
     flex: 1,
-    textAlign: "center",
-    },
-    itemIcon: {
-        width: 30,
-        height: 30,
-        justifyContent: 'center',
-        alignItems: 'center',
-      },
+    padding: 10,
+  },
 });

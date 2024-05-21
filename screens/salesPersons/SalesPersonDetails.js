@@ -1,20 +1,34 @@
-import { View, Text } from "react-native";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import CSPDetails from "../../components/ClientsSalesPersonOutput/CSPDetails";
-import { useEffect } from "react";
-import { fetchSalesPersonById } from "../../store/salesPersons/actions";
+import { useEffect, useState } from "react";
+import { fetchSalesPersonById, getMeetingsByIdsRequest } from "../../store/salesPersons/actions";
+import MeetingsList from "../../components/Meetings/MeetingsList";
 function SalesPersonDetails({ route, navigation }) {
   const dispatch = useDispatch();
   const id = route.params?.id;
   const salePerson = useSelector(
     (state) => state.salesPersonReducer.salePerson
   );
+  const meetings = useSelector(
+    (state) => state.salesPersonReducer.meetingsById
+  );
 
+  const [meetingState, setMeetingsState] = useState({});
+  useEffect(() => {
+    if (id) {
+      dispatch(getMeetingsByIdsRequest(id));
+    }
+  }, [id, dispatch]);
   useEffect(() => {
     if (id) {
       dispatch(fetchSalesPersonById(id));
     }
   }, [id]);
+
+  useEffect(() => {
+    setMeetingsState(meetings);
+  }, [meetings]);
 
   function navigateToScheduleMeeting() {
     navigation.navigate("scheduleMeeting", {
@@ -30,19 +44,27 @@ function SalesPersonDetails({ route, navigation }) {
   };
 
   return (
-    <CSPDetails
-      name={salePerson?.salesPerson?.name}
-      phoneNumber={salePerson?.salesPerson?.phone_number}
-      email={salePerson?.salesPerson?.email}
-      location={salePerson?.salesPerson?.location}
-      imageUrl={salePerson?.salesPerson?.image}
-      associatedClients={salePerson?.associatedClients}
-      pressHandler={navigateToScheduleMeeting}
-      showButton={true}
-      buttonText="Schedule Meeting"
-      meetingsList={"ABC"}
-      headers={headers}
-    />
+    <ScrollView style={styles.scrollViewStyle}>
+      <CSPDetails
+        name={salePerson?.salesPerson?.name}
+        phoneNumber={salePerson?.salesPerson?.phone_number}
+        email={salePerson?.salesPerson?.email}
+        location={salePerson?.salesPerson?.location}
+        imageUrl={salePerson?.salesPerson?.image}
+        associatedClients={salePerson?.associatedClients}
+        pressHandler={navigateToScheduleMeeting}
+        showButton={true}
+        buttonText="Schedule Meeting"
+        headers={headers}
+      />
+      <MeetingsList meetings={meetingState} headers={headers} />
+    </ScrollView>
   );
 }
 export default SalesPersonDetails;
+
+const styles = StyleSheet.create({
+  scrollViewStyle: {
+    marginBottom: 5,
+  },
+});
