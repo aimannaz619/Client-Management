@@ -29,6 +29,7 @@ function ClientDetailsScreen({ route }) {
       location={clientsById?.location}
       imageUrl={clientsById?.image}
       headers={headers}
+      person= "Sales Persons"
     />
   );
 }

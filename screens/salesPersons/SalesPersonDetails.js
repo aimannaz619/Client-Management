@@ -56,6 +56,7 @@ function SalesPersonDetails({ route, navigation }) {
         showButton={true}
         buttonText="Schedule Meeting"
         headers={headers}
+        person= "Clients"
       />
       <MeetingsList meetings={meetingState} headers={headers} />
     </ScrollView>
