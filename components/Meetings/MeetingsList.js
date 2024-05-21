@@ -6,7 +6,7 @@ import CSPSummary from "../ClientsSalesPersonOutput/cspSummary";
 import { getMeetingsByIdsRequest } from "../../store/salesPersons/actions";
 import { formattedTime } from "../../util/datTimeFormat";
 import PrimaryButton from "../UI/PrimaryButton";
-import { Ionicons } from '@expo/vector-icons';543wx
+import { Ionicons } from '@expo/vector-icons';
 
 function MeetingsList({ headers }) {
   const dispatch = useDispatch();
