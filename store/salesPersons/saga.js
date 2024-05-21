@@ -15,7 +15,7 @@ import {
   SAVE_MEETING,
   FETCH_MEETINGS_BY_ID_SUCCESS,
   FETCH_MEETINGS_BY_ID_FAILURE,
-  FETCH_MEETINGS_BY_ID_REQUEST
+  FETCH_MEETINGS_BY_ID_REQUEST,
 } from "./actionTypes";
 
 function* fetchSpsSaga() {
@@ -56,11 +56,12 @@ function* saveMeetingSaga(action) {
 
 function* fetchMeetingsByIdSaga(action) {
   try {
-    const meetingsById = yield call(fetchSpsMeetingsByIdService, action.payload);
+    const meetingsById = yield call(
+      fetchSpsMeetingsByIdService,
+      action.payload
+    );
     yield put({ type: FETCH_MEETINGS_BY_ID_SUCCESS, payload: meetingsById });
-  } catch (error) {
-
-  }
+  } catch (error) {}
 }
 
 function* watchSpsSaga() {
@@ -83,7 +84,7 @@ export function* salesPersonsSaga() {
     fork(watchSpsSaga),
     fork(watchFetchSPByIdSaga),
     fork(watchSaveMeetingSaga),
-    fork(watchSPMeetingsByIdSaga)
+    fork(watchSPMeetingsByIdSaga),
   ]);
 }
 

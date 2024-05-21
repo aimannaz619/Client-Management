@@ -29,6 +29,7 @@ const salesPersonReducer = (state = initialState, action) => {
       };
 
     case FETCH_SP_BY_ID_SUCCESS:
+    
       return {
         ...state,
         salePerson: action.payload,

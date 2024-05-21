@@ -13,14 +13,11 @@ function CSPDetails({
   pressHandler,
   showButton,
   buttonText,
-  imageUrl,
-  associatedClients,
-  meetingsList,
-  headers
-}) {
 
-  const clients = associatedClients?.map(client => client.name);
-  const clientNames = clients?.join(', ');
+  associatedClients,
+}) {
+  const clients = associatedClients?.map((client) => client.name);
+  const clientNames = clients?.join(", ");
   return (
     <View style={styles.rootContainer}>
       <View style={styles.innerContainer}>
@@ -61,10 +58,6 @@ function CSPDetails({
         <Text style={[styles.textItem, styles.locationText]}>Location</Text>
         <LocationPicker location={location} />
       </View>
-      <View>
-        <MeetingsList data={meetingsList} headers={headers} />
-      </View>
-     
     </View>
   );
 }
@@ -108,7 +101,6 @@ const styles = StyleSheet.create({
   textContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-
   },
 
   locationText: {

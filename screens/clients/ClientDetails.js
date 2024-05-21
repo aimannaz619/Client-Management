@@ -8,11 +8,13 @@ function ClientDetailsScreen({ route }) {
   const clientsById = useSelector((state) => state.clientReducer.clientById);
   const id = route.params?.id;
 
+
   useEffect(() => {
     if (id) {
       dispatch(getClientsByIdsRequest(id));
     }
   }, [id]);
+ 
   const headers = {
     salePersonName: "Name",
     date: "Date",

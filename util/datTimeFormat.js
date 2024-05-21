@@ -16,9 +16,7 @@ export function timeFormate2(time) {
   return time.toISOString().split("T")[1];
 }
 export function formatTime(timeString) {
-  
   const date = new Date(timeString);
-  console.log(date, "datae")
-  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-}
 
+  return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+}
