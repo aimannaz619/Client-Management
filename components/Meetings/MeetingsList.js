@@ -30,11 +30,11 @@ function MeetingsList({ headers, meetings }) {
     toggleExpand();
   }
 
- 
-
-  function navigateHandler(id) {
+  function navigateHandler(id, date, time) {
     navigation.navigate("clientDetails", {
       id: id,
+      date: date,
+      time: time,
     });
   }
 
@@ -42,12 +42,10 @@ function MeetingsList({ headers, meetings }) {
     return <CSPSummary headers={headers} />;
   }
 
- 
-
   return (
     <ScrollView>
       {header()}
-      {Object.values(meetings)?.map((item) => (
+      {meetings?.map((item) => (
         <Pressable key={item._id} onPress={handlePress}>
           <View style={styles.itemContainer}>
             <View style={styles.itemText}>
@@ -67,7 +65,9 @@ function MeetingsList({ headers, meetings }) {
             </View>
             <View style={styles.itemText}>
               <PrimaryButton
-                pressHandler={() => navigateHandler(item.clientId)}
+                pressHandler={() =>
+                  navigateHandler(item.clientId, item.date, item.time)
+                }
               >
                 View
               </PrimaryButton>

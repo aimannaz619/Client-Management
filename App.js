@@ -15,6 +15,9 @@ import SalesPersonDetails from "./screens/salesPersons/SalesPersonDetails";
 
 import ScheduleMeetingsScreen from "./screens/salesPersons/ScheduleMeetings";
 
+import TrackingScreen from "./screens/tracking/Tracking";
+import Tracking from "./components/Tracking/Tracking";
+
 export default function App() {
   const Drawer = createDrawerNavigator();
   const stack = createNativeStackNavigator();
@@ -63,6 +66,16 @@ export default function App() {
                 color="black"
                 size={size}
               />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="tracking"
+          component={Tracking}
+          options={{
+            title: "Track",
+            drawerIcon: ({ size }) => (
+              <IconButton name="bar-chart-sharp" color="black" size={size} />
             ),
           }}
         />

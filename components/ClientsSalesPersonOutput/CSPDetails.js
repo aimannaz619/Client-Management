@@ -1,9 +1,9 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import { GlobalStyles } from "../../Constants/styles";
 import LocationPicker from "./LocationPicker";
 import PrimaryButton from "../UI/PrimaryButton";
-import CSPSummary from "./cspSummary";
-import MeetingsList from "../Meetings/MeetingsList";
+
+import { formattedTime } from "../../util/datTimeFormat";
 
 function CSPDetails({
   name,
@@ -14,16 +14,18 @@ function CSPDetails({
   showButton,
   buttonText,
   person,
-
-  associatedClients,
+  date,
+  time,
+  associatedPersons,
 }) {
-  const clients = associatedClients?.map((client) => client.name);
+  const clients = associatedPersons?.map((client) => client.name);
   const clientNames = clients?.join(", ");
+
   return (
     <View style={styles.rootContainer}>
       <View style={styles.innerContainer}>
         <View style={styles.centerContainer}>
-          <View style={styles.imageContainer}>
+          <View style={[styles.imageContainer]}>
             <Image
               source={{
                 uri: "https://www.agilitypr.com/wp-content/uploads/2020/08/client-1.jpg",
@@ -46,6 +48,18 @@ function CSPDetails({
             <Text style={styles.textItem}>Associated {person}:</Text>
             <Text>{clientNames}</Text>
           </View>
+          {date && (
+            <View style={styles.textContainer}>
+              <Text style={styles.textItem}>Meeting Date: </Text>
+              <Text>{date}</Text>
+            </View>
+          )}
+          {time && (
+            <View style={styles.textContainer}>
+              <Text style={styles.textItem}>Meeting Time: </Text>
+              <Text>{formattedTime(time)}</Text>
+            </View>
+          )}
           {showButton && (
             <View style={styles.buttonStyle}>
               <PrimaryButton pressHandler={pressHandler}>
@@ -113,6 +127,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   buttonStyle: {
+    width: 200,
     marginTop: 20,
     justifyContent: "center",
     alignItems: "center",
