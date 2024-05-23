@@ -1,4 +1,11 @@
-import { View, StyleSheet, Image, Text, Pressable } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  Pressable,
+  Dimensions,
+} from "react-native";
 
 import { GlobalStyles } from "../../Constants/styles";
 
@@ -16,7 +23,6 @@ function LocationPicker({ location }) {
     });
   }, [location]);
   let locationPreview = <Text>No location picked yet.</Text>;
-
 
   if (pickedLocation) {
     locationPreview = (
@@ -44,12 +50,16 @@ function LocationPicker({ location }) {
 
 export default LocationPicker;
 
+const deviceWidth = Dimensions.get("window").width;
+
+
+
 const styles = StyleSheet.create({
   mapPreview: {
     marginVertical: 8,
     backgroundColor: GlobalStyles.colors.lightCyan,
     width: "100%",
-    height: 200,
+    height: 240,
     overflow: "hidden",
     justifyContent: "center",
     alignItems: "center",

@@ -11,7 +11,7 @@ function CSPSummary({ headers }) {
     <Pressable onPress={toggleExpand}>
       <View style={styles.rootHeader}>
         {Object.values(headers)?.map((header, index) => (
-          <View style={styles.title}>
+          <View style={styles.title} key={index}>
             <Text
               numberOfLines={expanded ? null : 1}
               ellipsizeMode="tail"
@@ -24,7 +24,7 @@ function CSPSummary({ headers }) {
       </View>
     </Pressable>
   );
-};
+}
 
 const styles = StyleSheet.create({
   rootHeader: {

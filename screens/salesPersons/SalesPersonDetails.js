@@ -2,8 +2,13 @@ import { View, Text, ScrollView, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import CSPDetails from "../../components/ClientsSalesPersonOutput/CSPDetails";
 import { useEffect, useState } from "react";
-import { fetchSalesPersonById, getMeetingsByIdsRequest } from "../../store/salesPersons/actions";
+import {
+  fetchSalesPersonById,
+  getMeetingsByIdsRequest,
+} from "../../store/salesPersons/actions";
 import MeetingsList from "../../components/Meetings/MeetingsList";
+import moment from "moment";
+import { formattedDate, isCurrentWeek } from "../../util/datTimeFormat";
 function SalesPersonDetails({ route, navigation }) {
   const dispatch = useDispatch();
   const id = route.params?.id;
@@ -14,7 +19,7 @@ function SalesPersonDetails({ route, navigation }) {
     (state) => state.salesPersonReducer.meetingsById
   );
 
-  const [meetingState, setMeetingsState] = useState({});
+  const [meetingState, setMeetingsState] = useState([]);
   useEffect(() => {
     if (id) {
       dispatch(getMeetingsByIdsRequest(id));
@@ -27,7 +32,8 @@ function SalesPersonDetails({ route, navigation }) {
   }, [id]);
 
   useEffect(() => {
-    setMeetingsState(meetings);
+    const currentWeekMeetings = meetings.filter(isCurrentWeek);
+    setMeetingsState(currentWeekMeetings);
   }, [meetings]);
 
   function navigateToScheduleMeeting() {
@@ -51,12 +57,12 @@ function SalesPersonDetails({ route, navigation }) {
         email={salePerson?.salesPerson?.email}
         location={salePerson?.salesPerson?.location}
         imageUrl={salePerson?.salesPerson?.image}
-        associatedClients={salePerson?.associatedClients}
+        associatedPersons={salePerson?.associatedClients}
         pressHandler={navigateToScheduleMeeting}
         showButton={true}
         buttonText="Schedule Meeting"
         headers={headers}
-        person= "Clients"
+        person="Clients"
       />
       <MeetingsList meetings={meetingState} headers={headers} />
     </ScrollView>
