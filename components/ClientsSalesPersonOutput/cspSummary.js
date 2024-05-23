@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: GlobalStyles.colors.bottleGreen,
-    paddingVertical: 13,
+    paddingVertical: 11,
     marginVertical: 4,
     elevation: 4,
     borderRadius: 8,

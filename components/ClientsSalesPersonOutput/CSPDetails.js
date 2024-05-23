@@ -12,7 +12,6 @@ import { useRoute } from "@react-navigation/native";
 import { fetchSalesPersonById } from "../../store/salesPersons/actions";
 import { useSelector } from "react-redux";
 
-
 function CSPDetails({
   name,
   email,
@@ -21,28 +20,28 @@ function CSPDetails({
   pressHandler,
   showButton,
   buttonText,
-  imageUrl,
-  associatedClients,
-  meetingsList,
-  headers
-}) {
+  person,
+  associatedPersons
+})
+{
 
-  const clients = associatedClients?.map(client => client.name);
-  console.log(associatedClients,"associated clients")
-  const clientNames = clients?.join(', ');
-  const currentRoute = useNavigationState(state => state.routes[state.index].name);
   const salePerson = useSelector(
     (state) => state.salesPersonReducer.salePerson
   );
-  console.log(salePerson?.associatedClients[0]?.salesPersonName,"sales person")
+
   const dispatch = useDispatch();
   const route = useRoute()
-  const { id } = route.params;
+  const {id} = route.params
   useEffect(() => {
     if (id) {
+      console.log("Dis")
       dispatch(fetchSalesPersonById(id));
     }
   }, [id]);
+  const clients = associatedPersons && associatedPersons?.map(client => client.name);
+  console.log(associatedPersons,"associated clients")
+  const clientNames = clients?.join(', ');
+  const currentRoute = useNavigationState(state => state.routes[state.index].name);
   console.log(id, "iD")
   console.log(salePerson,"sales")
   return (
@@ -69,16 +68,15 @@ function CSPDetails({
             <Text>{phoneNumber}</Text>
           </View>
           {currentRoute === 'salesPersonDetails' ? (
-        SalesPersonDetails && (
           <View style={styles.textContainer}>
             <Text style={styles.textItem}>Associated Clients:</Text>
             <Text>{clientNames}</Text>
           </View>
-        )
+        
       ) : (
         <View style={styles.textContainer}>
                 <Text style={styles.textItem}>Associated Sales Person:</Text>
-                <Text>{salePerson?.associatedClients[0]?.salesPersonName}</Text>
+                <Text> Rois </Text>
         </View>
       )}
           {showButton && (
@@ -94,10 +92,6 @@ function CSPDetails({
         <Text style={[styles.textItem, styles.locationText]}>Location</Text>
         <LocationPicker location={location} />
       </View>
-      <View>
-        <MeetingsList data={meetingsList} headers={headers} />
-      </View>
-     
     </View>
   );
 }
@@ -141,7 +135,6 @@ const styles = StyleSheet.create({
   textContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-
   },
 
   locationText: {
