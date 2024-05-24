@@ -30,11 +30,12 @@ function MeetingsList({ headers, meetings }) {
     toggleExpand();
   }
 
-  function navigateHandler(id, date, time) {
+  function navigateHandler(id, date, time, address) {
     navigation.navigate("clientDetails", {
       id: id,
       date: date,
       time: time,
+      address: address
     });
   }
 
@@ -66,7 +67,7 @@ function MeetingsList({ headers, meetings }) {
             <View style={styles.itemText}>
               <PrimaryButton
                 pressHandler={() =>
-                  navigateHandler(item.clientId, item.date, item.time)
+                  navigateHandler(item.clientId, item.date, item.time, item.address)
                 }
               >
                 View

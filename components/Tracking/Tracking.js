@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  fetchSalesPersonById,
   fetchSpsRequest,
   getMeetingsByIdsRequest,
 } from "../../store/salesPersons/actions";
@@ -23,9 +24,15 @@ function Tracking() {
     (state) => state.routes[state.index].name
   );
   const salesPerson = useSelector((state) => state.salesPersonReducer.sps);
+
   const meetings = useSelector(
     (state) => state.salesPersonReducer.meetingsById
   );
+  const salePerson = useSelector(
+    (state) => state.salesPersonReducer.salePerson
+  );
+
+
   const [selectedItem, setSelectedItem] = useState(null);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -36,10 +43,20 @@ function Tracking() {
   const [items, setItems] = useState([]);
   const [open, setOpen] = useState(false);
   const [filteredMeeting, setFilteredMeeting] = useState([]);
+  const [showMessage, setShowMessage] = useState(false);
+  const selectedDateTime = formattedDate(selectedDate)
 
   useEffect(() => {
     dispatch(fetchSpsRequest());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (selectedItem) {
+      dispatch(fetchSalesPersonById(selectedItem));
+      
+    }
+  }, [dispatch, selectedItem]);
+
 
   useEffect(() => {
     setSelectedItem(null);
@@ -74,15 +91,27 @@ function Tracking() {
       dispatch(getMeetingsByIdsRequest(selectedItem));
     }
   }, [selectedItem, dispatch]);
+  
 
   function trackMeetingsHandler() {
-    const filteredMeetings = meetings?.filter(
-      (item) => item.date === formattedDate(selectedDate)
-    );
-
-    const filteredLocations = filteredMeetings?.map((item) => item.location);
-
-    setFilteredMeeting(filteredLocations);
+    if (meetings) {
+      const filteredMeetings = meetings?.filter(
+        (item) => item.date === formattedDate(selectedDate)
+      );
+  
+      const filteredLocations = filteredMeetings?.map((item) => item.location);
+  
+      setFilteredMeeting(filteredLocations);
+      
+      if (filteredLocations.length === 0) {
+        setShowMessage(true);
+      } else {
+        setShowMessage(false);
+      }
+      
+    } else {
+      setShowMessage(true);
+    }
   }
 
   useEffect(() => {
@@ -151,6 +180,7 @@ function Tracking() {
               placeholderStyle={{
                 fontSize: 15,
               }}
+              onChangeValue={() => setShowMessage(false)}
             />
 
             <Pressable onPress={showDatePicker}>
@@ -211,10 +241,11 @@ function Tracking() {
           </View>
         ) : (
           <View style={styles.textView}>
-            <Text style={styles.text}>
-              Not have any scheduled meeting on this date
-            </Text>
-          </View>
+          <Text style={styles.text}>
+            {(selectedDate && showMessage) && `${salePerson.salesPerson.name} doesn't have any meetings scheduled on ${selectedDateTime}`}
+          </Text>
+        </View>
+        
         )}
       </View>
     </>

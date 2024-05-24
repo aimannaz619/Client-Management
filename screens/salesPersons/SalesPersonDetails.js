@@ -25,11 +25,12 @@ function SalesPersonDetails({ route, navigation }) {
       dispatch(getMeetingsByIdsRequest(id));
     }
   }, [id, dispatch]);
+
   useEffect(() => {
     if (id) {
       dispatch(fetchSalesPersonById(id));
     }
-  }, [id]);
+  }, [id, dispatch]);
 
   useEffect(() => {
     const currentWeekMeetings = meetings.filter(isCurrentWeek);

@@ -150,7 +150,7 @@ function ScheduleMeetings() {
     <View style={styles.rootContainer}>
       {exceededLimit ? (
         <View style={styles.textView}>
-          <Text style={styles.text}>Can't Schedule meetings more then 5</Text>
+          <Text style={styles.text}>A sales Person cannot have more than 5 meetings in one day!</Text>
         </View>
       ) : (
         <View style={styles.outerContainer}>
