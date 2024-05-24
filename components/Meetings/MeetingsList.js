@@ -31,7 +31,6 @@ function MeetingsList({ headers, meetings }) {
   }
 
   function navigateHandler(id, date, time, address) {
-    console.log(address,"Address")
     navigation.navigate("clientDetails", {
       id: id,
       date: date,
@@ -43,7 +42,6 @@ function MeetingsList({ headers, meetings }) {
   function header() {
     return <CSPSummary headers={headers} />;
   }
-  console.log(meetings,"Meetings")
 
   return (
     <ScrollView>

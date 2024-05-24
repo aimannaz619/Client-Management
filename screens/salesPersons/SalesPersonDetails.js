@@ -28,7 +28,6 @@ function SalesPersonDetails({ route, navigation }) {
 
   useEffect(() => {
     if (id) {
-      console.log('Dispatch')
       dispatch(fetchSalesPersonById(id));
     }
   }, [id, dispatch]);
