@@ -23,7 +23,11 @@ export function formatTime(timeString) {
 
 export function isCurrentWeek(meeting) {
   const now = new Date();
-  const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
+
+  const day = now.getDay();
+  const diff = day === 0 ? -6 : 1 - day; // Adjust if day is Sunday (0), start week from Monday
+  const startOfWeek = new Date(now.setDate(now.getDate() + diff));
+
   const endOfWeek = new Date(now.setDate(startOfWeek.getDate() + 5));
 
   const meetingDate = meeting.date;

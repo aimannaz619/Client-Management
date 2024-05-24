@@ -32,7 +32,11 @@ function SalesPersonDetails({ route, navigation }) {
   }, [id]);
 
   useEffect(() => {
+
+   
     const currentWeekMeetings = meetings.filter(isCurrentWeek);
+
+  
     setMeetingsState(currentWeekMeetings);
   }, [meetings]);
 
