@@ -9,6 +9,7 @@ import PrimaryButton from "../UI/PrimaryButton";
 import {
   formattedDate,
   formattedTime,
+  isCurrentWeek,
   timeFormate2,
 } from "../../util/datTimeFormat";
 import { useDispatch, useSelector } from "react-redux";
@@ -64,7 +65,8 @@ function ScheduleMeetings() {
   //useEffects
 
   useEffect(() => {
-    if (Object.values(meetings).length >= 5) {
+    const currentWeekMeetings = meetings.filter(isCurrentWeek);
+    if (currentWeekMeetings?.length >= 5) {
       setExceededLimit(true);
     }
   }, [meetings]);
@@ -148,7 +150,7 @@ function ScheduleMeetings() {
     <View style={styles.rootContainer}>
       {exceededLimit ? (
         <View style={styles.textView}>
-          <Text style={styles.text}>Can't Schedule meetings more then 5</Text>
+          <Text style={styles.text}>A sales Person cannot have more than 5 meetings in one day!</Text>
         </View>
       ) : (
         <View style={styles.outerContainer}>
@@ -219,7 +221,6 @@ function ScheduleMeetings() {
                 />
               </View>
             </Pressable>
-
             <View style={styles.saveButtonStyle}>
               <PrimaryButton pressHandler={saveMeetingHandler}>
                 Save Meeting
@@ -237,7 +238,6 @@ export default ScheduleMeetings;
 const styles = StyleSheet.create({
   textView: {
     flex: 1,
-
     justifyContent: "center",
     alignItems: "center",
   },
@@ -284,8 +284,8 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   saveButtonStyle: {
-    // marginTop: 20,
+   
     justifyContent: "center",
-    // alignItems: "center",
+  
   },
 });

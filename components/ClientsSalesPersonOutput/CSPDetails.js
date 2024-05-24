@@ -1,16 +1,9 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import { GlobalStyles } from "../../Constants/styles";
 import LocationPicker from "./LocationPicker";
 import PrimaryButton from "../UI/PrimaryButton";
-import CSPSummary from "./cspSummary";
-import MeetingsList from "../Meetings/MeetingsList";
-import SalesPersonDetails from "../../screens/salesPersons/SalesPersonDetails";
-import { useNavigationState } from '@react-navigation/native';
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useRoute } from "@react-navigation/native";
-import { fetchSalesPersonById } from "../../store/salesPersons/actions";
-import { useSelector } from "react-redux";
+
+import { formattedTime } from "../../util/datTimeFormat";
 
 function CSPDetails({
   name,
@@ -21,34 +14,19 @@ function CSPDetails({
   showButton,
   buttonText,
   person,
-  associatedPersons
-})
-{
+  date,
+  time,
+  address,
+  associatedPersons,
+}) {
+  const clients = associatedPersons?.map((client) => client.name);
+  const clientNames = clients?.join(", ");
 
-  const salePerson = useSelector(
-    (state) => state.salesPersonReducer.salePerson
-  );
-
-  const dispatch = useDispatch();
-  const route = useRoute()
-  const {id} = route.params
-  useEffect(() => {
-    if (id) {
-      console.log("Dis")
-      dispatch(fetchSalesPersonById(id));
-    }
-  }, [id]);
-  const clients = associatedPersons && associatedPersons?.map(client => client.name);
-  console.log(associatedPersons,"associated clients")
-  const clientNames = clients?.join(', ');
-  const currentRoute = useNavigationState(state => state.routes[state.index].name);
-  console.log(id, "iD")
-  console.log(salePerson,"sales")
   return (
     <View style={styles.rootContainer}>
       <View style={styles.innerContainer}>
         <View style={styles.centerContainer}>
-          <View style={styles.imageContainer}>
+          <View style={[styles.imageContainer]}>
             <Image
               source={{
                 uri: "https://www.agilitypr.com/wp-content/uploads/2020/08/client-1.jpg",
@@ -67,18 +45,28 @@ function CSPDetails({
             <Text style={styles.textItem}>Phone Number:</Text>
             <Text>{phoneNumber}</Text>
           </View>
-          {currentRoute === 'salesPersonDetails' ? (
           <View style={styles.textContainer}>
-            <Text style={styles.textItem}>Associated Clients:</Text>
+            <Text style={styles.textItem}>Associated {person}:</Text>
             <Text>{clientNames}</Text>
           </View>
-        
-      ) : (
-        <View style={styles.textContainer}>
-                <Text style={styles.textItem}>Associated Sales Person:</Text>
-                <Text> Rois </Text>
-        </View>
-      )}
+          {date && (
+            <View style={styles.textContainer}>
+              <Text style={styles.textItem}>Meeting Date: </Text>
+              <Text>{date}</Text>
+            </View>
+          )}
+          {time && (
+            <View style={styles.textContainer}>
+              <Text style={styles.textItem}>Meeting Time: </Text>
+              <Text>{formattedTime(time)}</Text>
+            </View>
+          )}
+          {address && (
+            <View style={styles.textContainer}>
+              <Text style={styles.textItem}>Meeting Address: </Text>
+              <Text>{address}</Text>
+            </View>
+          )}
           {showButton && (
             <View style={styles.buttonStyle}>
               <PrimaryButton pressHandler={pressHandler}>
@@ -146,6 +134,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   buttonStyle: {
+    width: 200,
     marginTop: 20,
     justifyContent: "center",
     alignItems: "center",
