@@ -16,6 +16,7 @@ function CSPDetails({
   person,
   date,
   time,
+  address,
   associatedPersons,
 }) {
   const clients = associatedPersons?.map((client) => client.name);
@@ -58,6 +59,12 @@ function CSPDetails({
             <View style={styles.textContainer}>
               <Text style={styles.textItem}>Meeting Time: </Text>
               <Text>{formattedTime(time)}</Text>
+            </View>
+          )}
+          {address && (
+            <View style={styles.textContainer}>
+              <Text style={styles.textItem}>Meeting Address: </Text>
+              <Text>{address}</Text>
             </View>
           )}
           {showButton && (

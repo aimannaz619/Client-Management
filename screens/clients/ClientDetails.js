@@ -10,6 +10,7 @@ function ClientDetailsScreen({ route }) {
   const id = route.params?.id;
   const date = route.params?.date;
   const time = route.params?.time;
+  const address = route.params?.address
 
   useEffect(() => {
     if (id) {
@@ -37,6 +38,7 @@ function ClientDetailsScreen({ route }) {
         person="Sales Persons"
         date={date}
         time={time}
+        address={address}
       />
     </ScrollView>
   );
