@@ -1,8 +1,9 @@
 import moment from "moment";
 export function formattedDate(date) {
-  const day = date?.getDate();
-  const month = date?.getMonth() + 1;
-  const year = date?.getFullYear();
+  const dateValue = new Date(date);
+  const day = dateValue?.getDate();
+  const month = dateValue?.getMonth() + 1;
+  const year = dateValue?.getFullYear();
 
   const formatDate = `${day}/${month}/${year}`;
   return formatDate;
@@ -30,14 +31,16 @@ export function isCurrentWeek(meeting) {
 
   const endOfWeek = new Date(now.setDate(startOfWeek.getDate() + 5));
 
-  const meetingDate = meeting.date;
+  const meetingDate = new Date(meeting.date);
+ 
 
-  const formattedStartOfWeek = formattedDate(startOfWeek);
+  const formattedStartOfWeek = startOfWeek;
 
-  const formattedEndOfWeek = formattedDate(endOfWeek);
-
+  const formattedEndOfWeek = endOfWeek;
+ 
   const isValidMeetingDate =
     meetingDate >= formattedStartOfWeek && meetingDate <= formattedEndOfWeek;
+
 
   return isValidMeetingDate;
 }

@@ -122,7 +122,7 @@ function ScheduleMeetings() {
   function saveMeetingHandler() {
     const payload = {
       clientId: selectedItem,
-      date: formattedDate(selectedDateTime?.date),
+      date: selectedDateTime?.date,
       time: selectedDateTime?.time,
       salesPersonId: id,
       callbacks: {
@@ -150,7 +150,9 @@ function ScheduleMeetings() {
     <View style={styles.rootContainer}>
       {exceededLimit ? (
         <View style={styles.textView}>
-          <Text style={styles.text}>A sales Person cannot have more than 5 meetings in one day!</Text>
+          <Text style={styles.text}>
+            A sales Person cannot have more than 5 meetings in one day!
+          </Text>
         </View>
       ) : (
         <View style={styles.outerContainer}>
@@ -284,8 +286,6 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   saveButtonStyle: {
-   
     justifyContent: "center",
-  
   },
 });

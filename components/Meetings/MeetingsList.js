@@ -1,26 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import {
-  FlatList,
+ 
   View,
   Text,
   StyleSheet,
   Pressable,
   ScrollView,
 } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import CSPSummary from "../ClientsSalesPersonOutput/cspSummary";
-import { getMeetingsByIdsRequest } from "../../store/salesPersons/actions";
-import { formattedTime } from "../../util/datTimeFormat";
+import { formattedDate, formattedTime } from "../../util/datTimeFormat";
 import PrimaryButton from "../UI/PrimaryButton";
-import { Ionicons } from "@expo/vector-icons";
-import { GlobalStyles } from "../../Constants/styles";
 
 function MeetingsList({ headers, meetings }) {
-  const dispatch = useDispatch();
+ 
   const navigation = useNavigation();
-  const route = useRoute();
-  const { id } = route.params;
+  
+ 
   const [expanded, setExpanded] = useState(false);
   function toggleExpand() {
     setExpanded(!expanded);
@@ -56,7 +53,7 @@ function MeetingsList({ headers, meetings }) {
             </View>
             <View style={styles.itemText}>
               <Text numberOfLines={expanded ? null : 1} ellipsizeMode="tail">
-                {item.date}
+              {item.date && formattedDate(item.date)}
               </Text>
             </View>
             <View style={styles.itemText}>
