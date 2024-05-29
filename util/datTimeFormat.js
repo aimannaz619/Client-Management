@@ -32,15 +32,22 @@ export function isCurrentWeek(meeting) {
   const endOfWeek = new Date(now.setDate(startOfWeek.getDate() + 5));
 
   const meetingDate = new Date(meeting.date);
- 
 
   const formattedStartOfWeek = startOfWeek;
 
   const formattedEndOfWeek = endOfWeek;
- 
+
   const isValidMeetingDate =
     meetingDate >= formattedStartOfWeek && meetingDate <= formattedEndOfWeek;
 
-
   return isValidMeetingDate;
+}
+
+export function maxDate() {
+  const now = new Date();
+  const day = now.getDay();
+  const diff = day === 0 ? -6 : 1 - day; // Adjust if day is Sunday (0), start week from Monday
+  const startOfWeek = new Date(now.setDate(now.getDate() + diff));
+  const endOfWeek = new Date(now.setDate(startOfWeek.getDate() + 5));
+  return endOfWeek;
 }

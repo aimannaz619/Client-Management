@@ -10,6 +10,7 @@ import {
   formattedDate,
   formattedTime,
   isCurrentWeek,
+  maxDate,
   timeFormate2,
 } from "../../util/datTimeFormat";
 import { useDispatch, useSelector } from "react-redux";
@@ -59,8 +60,8 @@ function ScheduleMeetings() {
 
   //Validation
 
-  const maxDate = new Date();
-  maxDate.setDate(maxDate.getDate() + 7);
+  // const maxDate = new Date();
+  // maxDate.setDate(maxDate.getDate() + 7);
 
   //useEffects
 
@@ -195,7 +196,7 @@ function ScheduleMeetings() {
                   mode="date"
                   onConfirm={handleDateConfirm}
                   onCancel={hideDatePicker}
-                  maximumDate={maxDate}
+                  maximumDate={maxDate()}
                   minimumDate={new Date()}
                 />
               </View>
