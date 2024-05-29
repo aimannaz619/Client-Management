@@ -10,6 +10,7 @@ import {
   formattedDate,
   formattedTime,
   isCurrentWeek,
+  maxDate,
   timeFormate2,
 } from "../../util/datTimeFormat";
 import { useDispatch, useSelector } from "react-redux";
@@ -59,8 +60,8 @@ function ScheduleMeetings() {
 
   //Validation
 
-  const maxDate = new Date();
-  maxDate.setDate(maxDate.getDate() + 7);
+  // const maxDate = new Date();
+  // maxDate.setDate(maxDate.getDate() + 7);
 
   //useEffects
 
@@ -122,7 +123,7 @@ function ScheduleMeetings() {
   function saveMeetingHandler() {
     const payload = {
       clientId: selectedItem,
-      date: formattedDate(selectedDateTime?.date),
+      date: selectedDateTime?.date,
       time: selectedDateTime?.time,
       salesPersonId: id,
       callbacks: {
@@ -150,7 +151,9 @@ function ScheduleMeetings() {
     <View style={styles.rootContainer}>
       {exceededLimit ? (
         <View style={styles.textView}>
-          <Text style={styles.text}>A sales Person cannot have more than 5 meetings in one day!</Text>
+          <Text style={styles.text}>
+            A sales Person cannot have more than 5 meetings in one day!
+          </Text>
         </View>
       ) : (
         <View style={styles.outerContainer}>
@@ -193,7 +196,7 @@ function ScheduleMeetings() {
                   mode="date"
                   onConfirm={handleDateConfirm}
                   onCancel={hideDatePicker}
-                  maximumDate={maxDate}
+                  maximumDate={maxDate()}
                   minimumDate={new Date()}
                 />
               </View>
@@ -284,8 +287,6 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   saveButtonStyle: {
-   
     justifyContent: "center",
-  
   },
 });

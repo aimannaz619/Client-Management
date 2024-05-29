@@ -1,8 +1,9 @@
 import moment from "moment";
 export function formattedDate(date) {
-  const day = date?.getDate();
-  const month = date?.getMonth() + 1;
-  const year = date?.getFullYear();
+  const dateValue = new Date(date);
+  const day = dateValue?.getDate();
+  const month = dateValue?.getMonth() + 1;
+  const year = dateValue?.getFullYear();
 
   const formatDate = `${day}/${month}/${year}`;
   return formatDate;
@@ -23,17 +24,30 @@ export function formatTime(timeString) {
 
 export function isCurrentWeek(meeting) {
   const now = new Date();
-  const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
+
+  const day = now.getDay();
+  const diff = day === 0 ? -6 : 1 - day; // Adjust if day is Sunday (0), start week from Monday
+  const startOfWeek = new Date(now.setDate(now.getDate() + diff));
+
   const endOfWeek = new Date(now.setDate(startOfWeek.getDate() + 5));
 
-  const meetingDate = meeting.date;
+  const meetingDate = new Date(meeting.date);
 
-  const formattedStartOfWeek = formattedDate(startOfWeek);
+  const formattedStartOfWeek = startOfWeek;
 
-  const formattedEndOfWeek = formattedDate(endOfWeek);
+  const formattedEndOfWeek = endOfWeek;
 
   const isValidMeetingDate =
     meetingDate >= formattedStartOfWeek && meetingDate <= formattedEndOfWeek;
 
   return isValidMeetingDate;
+}
+
+export function maxDate() {
+  const now = new Date();
+  const day = now.getDay();
+  const diff = day === 0 ? -6 : 1 - day; // Adjust if day is Sunday (0), start week from Monday
+  const startOfWeek = new Date(now.setDate(now.getDate() + diff));
+  const endOfWeek = new Date(now.setDate(startOfWeek.getDate() + 5));
+  return endOfWeek;
 }

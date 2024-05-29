@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchSalesPersonById,
@@ -17,12 +25,15 @@ import { formattedDate } from "../../util/datTimeFormat";
 import { useNavigationState } from "@react-navigation/native";
 
 import MapView, { Marker, Polyline } from "react-native-maps";
+import { ScrollView } from "react-native-gesture-handler";
 
 function Tracking() {
   const dispatch = useDispatch();
   const currentRoute = useNavigationState(
     (state) => state.routes[state.index].name
   );
+  const { width, height } = useWindowDimensions();
+
   const salesPerson = useSelector((state) => state.salesPersonReducer.sps);
 
   const meetings = useSelector(
@@ -129,40 +140,13 @@ function Tracking() {
     }
   }, [filteredMeeting]);
 
-  return (
+  const isLandscapeMode = width > height ? true : false;
+
+  let content = (
     <>
       <View style={styles.rootContainer}>
         <View style={styles.outerContainer}>
           <View style={styles.innerContainer}>
-            {/* <SearchableDropdown
-              textInputProps={{
-                placeholder: "placeholder",
-                underlineColorAndroid: "transparent",
-                style: {
-                  padding: 12,
-                  borderWidth: 1,
-                  borderColor: "#ccc",
-                  borderRadius: 5,
-                },
-                onTextChange: (text) => alert(text),
-              }}
-              onItemSelect={setItems}
-              items={items}
-              value={selectedItem}
-              containerStyle={{ padding: 5 }}
-              itemStyle={{
-                padding: 10,
-                marginTop: 2,
-                backgroundColor: "#ddd",
-                borderColor: "#bbb",
-                borderWidth: 1,
-                borderRadius: 5,
-              }}
-              schema={{
-                label: "name",
-                value: "_id",
-              }}
-            /> */}
             <Text style={styles.textStyle}>Associated Sales Persons :</Text>
             <DropDownPicker
               style={styles.dropDownStyle}
@@ -213,7 +197,7 @@ function Tracking() {
           </View>
         </View>
         {filteredMeeting.length > 0 ? (
-          <View>
+          <View style={styles.innerViewContainer}>
             <View>
               <Text style={styles.meetingText}>Meeting Locations</Text>
             </View>
@@ -250,6 +234,107 @@ function Tracking() {
       </View>
     </>
   );
+
+  let renderContent = () => (
+    <View style={styles.rootContainer}>
+      <View style={styles.innerContainer}>
+        <Text style={styles.textStyle}>Associated Sales Persons :</Text>
+        <DropDownPicker
+          style={styles.dropDownStyle}
+          open={open}
+          schema={{
+            label: "name",
+            value: "_id",
+          }}
+          value={selectedItem}
+          items={items}
+          setOpen={setOpen}
+          setValue={setSelectedItem}
+          setItems={setItems}
+          placeholder="Select a sale person"
+          placeholderStyle={{
+            fontSize: 15,
+          }}
+        />
+
+        <Pressable onPress={showDatePicker}>
+          <View style={styles.dateTimeStyle}>
+            <IconButton
+              name="calendar-number-outline"
+              size={25}
+              onPress={showDatePicker}
+              style={styles.buttonStyle}
+            />
+
+            <Text style={styles.innerText}>
+              {selectedDate ? formattedDate(selectedDate) : "Select Date"}
+            </Text>
+            <DateTimePickerModal
+              isVisible={isDatePickerVisible.date}
+              mode="date"
+              onConfirm={handleDateConfirm}
+              onCancel={hideDatePicker}
+              maximumDate={new Date()}
+            />
+          </View>
+        </Pressable>
+
+        <View style={styles.saveButtonStyle}>
+          <PrimaryButton pressHandler={trackMeetingsHandler}>
+            Track
+          </PrimaryButton>
+        </View>
+      </View>
+
+      {filteredMeeting.length > 0 ? (
+        <View style={styles.innerViewContainer}>
+          <View>
+            <Text style={styles.meetingText}>Meeting Locations</Text>
+          </View>
+
+          <MapView style={styles.map} zoomEnabled={true}>
+            {coords?.map((marker, index) => (
+              <Marker
+                key={index}
+                coordinate={{
+                  latitude: marker?.coordinates?.latitude,
+                  longitude: marker?.coordinates?.longitude,
+                }}
+              >
+                <View style={styles.marker}>
+                  <View style={styles.dot} />
+                  <Text>`Meeting {index + 1}`</Text>
+                </View>
+              </Marker>
+            ))}
+            <Polyline
+              coordinates={coordinates}
+              strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
+              strokeWidth={6}
+            />
+          </MapView>
+        </View>
+      ) : (
+        <View style={styles.landscapeTextView}>
+          <Text style={styles.text}>
+            Not have any scheduled meeting on this date
+          </Text>
+        </View>
+      )}
+    </View>
+  );
+
+  if (isLandscapeMode) {
+    content = (
+      <FlatList
+        data={[{ key: "content" }]}
+        renderItem={renderContent}
+        keyExtractor={(item) => item.key}
+        contentContainerStyle={{ flexGrow: 1 }}
+      />
+    );
+  }
+  return <>{content}</>;
 }
 
 export default Tracking;
@@ -259,9 +344,15 @@ const styles = StyleSheet.create({
     // flex: 1,
     width: "100%",
     height: "100%",
-    margin: 6,
+
     borderWidth: 2,
     borderColor: "black",
+  },
+  landscapeTextView: {
+    marginTop: 50,
+    textAlign: "center",
+    alignItems: "center",
+    justifyContent: "center",
   },
   meetingText: {
     textAlign: "center",
@@ -274,24 +365,31 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 100,
   },
   text: {
     fontSize: 18,
     fontWeight: "bold",
   },
   rootContainer: {
+    height: "100vh",
     flex: 1,
     // margin:8,
     justifyContent: "space-between",
   },
 
-  outerContainer: {
-    margin: 15,
-  },
   innerContainer: {
+    margin: 15,
     padding: 15,
     borderRadius: 8,
     backgroundColor: GlobalStyles.colors.lightGreen,
+  },
+  innerViewContainer: {
+    marginTop: 50,
+    flex: 1,
+    height: 500,
+
+    // marginBottom: 50,
   },
   dropDownStyle: {
     marginVertical: 8,
