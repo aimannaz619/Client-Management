@@ -8,7 +8,7 @@ function AllClients() {
 
   const clients = useSelector((state) => state.clientReducer.clients);
 
-  console.log(clients, "clints")
+ 
 
   useEffect(() => {
     dispatch(fetchClientsRequest());

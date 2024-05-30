@@ -9,13 +9,8 @@ export const fetchClients = async () => {
   try {
     const response = await axios.get(API_URL_GET_ALL_CLIENTS);
 
-    console.log(response, "response")
-
     return response.data;
-  } catch (error) {
-
-    console.log(error)
-  }
+  } catch (error) {}
 };
 
 export const getClientsByIds = async (id) => {
@@ -26,4 +21,3 @@ export const getClientsByIds = async (id) => {
     throw error.response ? error.response.data : error.message;
   }
 };
-

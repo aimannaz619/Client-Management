@@ -43,7 +43,6 @@ function Tracking() {
     (state) => state.salesPersonReducer.salePerson
   );
 
-
   const [selectedItem, setSelectedItem] = useState(null);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -55,7 +54,7 @@ function Tracking() {
   const [open, setOpen] = useState(false);
   const [filteredMeeting, setFilteredMeeting] = useState([]);
   const [showMessage, setShowMessage] = useState(false);
-  const selectedDateTime = formattedDate(selectedDate)
+  const selectedDateTime = formattedDate(selectedDate);
 
   useEffect(() => {
     dispatch(fetchSpsRequest());
@@ -64,10 +63,8 @@ function Tracking() {
   useEffect(() => {
     if (selectedItem) {
       dispatch(fetchSalesPersonById(selectedItem));
-      
     }
   }, [dispatch, selectedItem]);
-
 
   useEffect(() => {
     setSelectedItem(null);
@@ -102,24 +99,22 @@ function Tracking() {
       dispatch(getMeetingsByIdsRequest(selectedItem));
     }
   }, [selectedItem, dispatch]);
-  
 
   function trackMeetingsHandler() {
     if (meetings) {
       const filteredMeetings = meetings?.filter(
-        (item) => item.date === formattedDate(selectedDate)
+        (item) => formattedDate(item.date) === formattedDate(selectedDate)
       );
-  
+
       const filteredLocations = filteredMeetings?.map((item) => item.location);
-  
+
       setFilteredMeeting(filteredLocations);
-      
+
       if (filteredLocations.length === 0) {
         setShowMessage(true);
       } else {
         setShowMessage(false);
       }
-      
     } else {
       setShowMessage(true);
     }
@@ -225,11 +220,12 @@ function Tracking() {
           </View>
         ) : (
           <View style={styles.textView}>
-          <Text style={styles.text}>
-            {(selectedDate && showMessage) && `${salePerson.salesPerson.name} doesn't have any meetings scheduled on ${selectedDateTime}`}
-          </Text>
-        </View>
-        
+            <Text style={styles.text}>
+              {selectedDate &&
+                showMessage &&
+                `${salePerson.salesPerson.name} doesn't have any meetings scheduled on ${selectedDateTime}`}
+            </Text>
+          </View>
         )}
       </View>
     </>
