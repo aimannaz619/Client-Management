@@ -3,7 +3,7 @@ import { GlobalStyles } from "../../Constants/styles";
 import LocationPicker from "./LocationPicker";
 import PrimaryButton from "../UI/PrimaryButton";
 
-import { formattedTime } from "../../util/datTimeFormat";
+import { formattedDate, formattedTime } from "../../util/datTimeFormat";
 
 function CSPDetails({
   name,
@@ -52,7 +52,7 @@ function CSPDetails({
           {date && (
             <View style={styles.textContainer}>
               <Text style={styles.textItem}>Meeting Date: </Text>
-              <Text>{date}</Text>
+              <Text>{formattedDate(date)}</Text>
             </View>
           )}
           {time && (
